@@ -26,6 +26,7 @@ public class Player {
 	 */
 	public void draw(Graphics g, Board brd){
 		BoardCell start = brd.getCellAt(cellIndex);
+		g.setColor(pieceColor);
 		g.fillOval(start.getCol()*Board.CELLSIZE, start.getRow()*Board.CELLSIZE, Board.CELLSIZE, Board.CELLSIZE);
 	}
 
