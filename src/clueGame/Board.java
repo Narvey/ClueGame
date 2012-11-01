@@ -27,6 +27,9 @@ public class Board extends JPanel{
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		for(Player p : players){
+			p.draw(g, this);
+		}
 	}
 	
 	public int calcIndex(int row, int col) {

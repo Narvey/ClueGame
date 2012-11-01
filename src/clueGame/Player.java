@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import clueGame.Board;
 
 public class Player {
 	private String name;
@@ -18,9 +19,14 @@ public class Player {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void draw(Graphics g){
-		//BoardCell start = Board.this.getCellAt(cellIndex);
-		//g.fillOval(1, 2, Board.CELLSIZE, Board.CELLSIZE);
+	/**
+	 * Draws the Player
+	 * @param g the graphics object to draw on
+	 * @param brd the board this person is playing on.
+	 */
+	public void draw(Graphics g, Board brd){
+		BoardCell start = brd.getCellAt(cellIndex);
+		g.fillOval(start.getCol()*Board.CELLSIZE, start.getRow()*Board.CELLSIZE, Board.CELLSIZE, Board.CELLSIZE);
 	}
 
 	public int getCellIndex() {
