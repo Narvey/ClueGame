@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,11 @@ public class Player {
 
 	public Player() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void draw(Graphics g){
+		//BoardCell start = Board.this.getCellAt(cellIndex);
+		//g.fillOval(1, 2, Board.CELLSIZE, Board.CELLSIZE);
 	}
 
 	public int getCellIndex() {

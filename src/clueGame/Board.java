@@ -1,15 +1,16 @@
 package clueGame;
 
 import java.awt.Color;
-import java.io.FileNotFoundException;
+import java.awt.Graphics;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import javax.swing.JPanel;
 
 import clueGame.Card.CardType;
 import clueGame.RoomCell.DoorDirection;
 
-public class Board {
+public class Board extends JPanel{
 	private ArrayList<BoardCell> cells = new ArrayList<BoardCell>();
 	private Map<Character, String> rooms = new TreeMap<Character, String>();
 	private Map<Integer, LinkedList<Integer>> adjacencies = new HashMap<Integer, LinkedList<Integer>>();
@@ -19,11 +20,15 @@ public class Board {
 	private HumanPlayer human;
 	private List<Card> cards = new LinkedList<Card>();
 	private CardSet solution;
-
+	public static final int CELLSIZE=30;
 	private int numRows;
-
 	private int numColumns;
 
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+	}
+	
 	public int calcIndex(int row, int col) {
 		int index = (row * numColumns) + col;
 		return index;
