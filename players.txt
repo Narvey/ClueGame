@@ -2,5 +2,5 @@ Colonel Mustard,0xFFFF00,4
 Miss Scarlet,0xFF0000,18
 Miss White,0xFFFFFF,160
 Mr. Green,0x00FF00,184
-Professor Plum,0xEEFF10,276
+Professor Plum,0xEE10FF,276
 Mrs. Peacock,0x0000FF,344
