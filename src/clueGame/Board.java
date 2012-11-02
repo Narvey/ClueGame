@@ -27,11 +27,11 @@ public class Board extends JPanel{
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		for(Player p : players){
-			p.draw(g, this);
-		}
 		for(BoardCell o : cells){
 			o.draw(g, this);
+		}
+		for(Player p : players){
+			p.draw(g, this);
 		}
 	}
 	
