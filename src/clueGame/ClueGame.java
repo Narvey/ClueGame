@@ -18,13 +18,12 @@ public class ClueGame extends JFrame {
 		// Adding Board to JFrame
 		Board gameBoard = new Board();
 		try {
-			gameBoard.loadConfigFiles("ClueBoardLegend.txt", "ClueBoardLayout.csv", "weapons.txt", "players.txt");
+			gameBoard.loadConfigFiles("legend2.csv", "board2.csv", "weapons.txt", "players.txt");
 		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		} catch (IOException e) {
-			//TODO human readable
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.exit(0);
 		}
 		setLayout(new BorderLayout());
 		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);

@@ -236,11 +236,11 @@ public class Board extends JPanel{
 		while (scan.hasNext()) {
 			String wholeString = scan.nextLine();
 			if (!wholeString.contains(",")) {
-				throw new BadConfigFormatException();
+				throw new BadConfigFormatException("Comma missing in file " + boardFile);
 			}
 			String[] strArr = wholeString.split(",");
 			for (int i = 0; i < strArr.length; i++) {
-				String str = strArr[i];
+				String str = strArr[i].trim();
 				if (str.equalsIgnoreCase("W")) {
 					WalkwayCell wc = new WalkwayCell();
 					wc.setCol(i);
@@ -294,10 +294,10 @@ public class Board extends JPanel{
 		// populate legend map
 		while (scan.hasNext()) {
 			String wholeString = scan.nextLine();
-			if (!wholeString.contains(", ")) {
-				throw new BadConfigFormatException();
+			if (!wholeString.contains(",")) {
+				throw new BadConfigFormatException("Comma missing in file " + legendFile);
 			}
-			String[] stringArr = wholeString.split(", ");
+			String[] stringArr = wholeString.split(",");
 			String character = stringArr[0];
 			String room = stringArr[1];
 			char c = character.charAt(0);

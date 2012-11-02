@@ -1,4 +1,4 @@
-Colonel Mustard,0xFFFF00,4
+Colonel Mustard,0xAAAA00,4
 Miss Scarlet,0xFF0000,18
 Miss White,0xFFFFFF,160
 Mr. Green,0x00FF00,184
