@@ -58,6 +58,7 @@ public class ClueGame extends JFrame {
 
 	public static void main(String[] args) {
 		ClueGame game = new ClueGame();
+		game.setTitle("The game of Clue-Lah!");
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
 	}

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class RoomCell extends BoardCell {
-
+	public static final int DOORWIDTH = 15;///width, in pixels, of the door.
 	public enum DoorDirection {
 		UP, DOWN, LEFT, RIGHT, NONE
 	}
@@ -21,11 +21,7 @@ public class RoomCell extends BoardCell {
 	}
 
 	public boolean isRoom() {
-		if (this.getInitial() != 'X') {
-			return true;
-		} else {
-			return false;
-		}
+		return (this.getInitial() != 'X');
 	}
 
 	public boolean isWalkway() {
@@ -33,11 +29,7 @@ public class RoomCell extends BoardCell {
 	}
 
 	public boolean isDoorway() {
-		if (doorDirection != DoorDirection.NONE) {
-			return true;
-		} else {
-			return false;
-		}
+		return (doorDirection != DoorDirection.NONE);
 	}
 
 
@@ -61,11 +53,31 @@ public class RoomCell extends BoardCell {
 		}
 	}
 
+	
 	@Override
 	void draw(Graphics g, Board brd) {
 		g.setColor(Color.GRAY);
-		g.fillRect(brd.CELLSIZE*col, brd.CELLSIZE*row, brd.CELLSIZE, brd.CELLSIZE);
-		//TODO add door direction
+		int x = brd.CELLSIZE*col;
+		int y = brd.CELLSIZE*row;
+		g.fillRect(x, y, brd.CELLSIZE, brd.CELLSIZE);
+		g.setColor(Color.BLUE);
+		switch (doorDirection){
+		case UP:
+			g.fillRect(x, y, brd.CELLSIZE, DOORWIDTH);
+			break;
+		case DOWN:
+			g.fillRect(x, y+brd.CELLSIZE-DOORWIDTH, brd.CELLSIZE, DOORWIDTH);
+			break;
+		case LEFT:
+			g.fillRect(x, y, DOORWIDTH, brd.CELLSIZE);
+			break;
+		case RIGHT:
+			g.fillRect(x+brd.CELLSIZE-DOORWIDTH, y, DOORWIDTH, brd.CELLSIZE);
+			break;
+		default:
+			g.drawString(String.valueOf(initial), x, y+brd.CELLSIZE/2);
+			break;
+		}
 	}
 
 }
