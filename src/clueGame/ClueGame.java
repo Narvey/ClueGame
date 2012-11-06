@@ -15,10 +15,12 @@ import javax.swing.JOptionPane;
 public class ClueGame extends JFrame {
 	JMenuItem item = new JMenuItem("Exit");
 	JMenuItem item2 = new JMenuItem("Show Detective Notes");
+	Board gameBoard;
+	
 	public ClueGame() {
 		super();
 		// Adding Board to JFrame
-		Board gameBoard = new Board();
+		gameBoard = new Board();
 		try {
 			gameBoard.loadConfigFiles("CR-ClueLayout.csv", "CR-ClueLayout.csv", "weapons.txt", "players.txt");
 		} catch (BadConfigFormatException e) {
@@ -47,7 +49,8 @@ public class ClueGame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==item) System.exit(0);
 				else if (e.getSource()==item2){
-					DetectiveNotesDialog d = new DetectiveNotesDialog();
+					DetectiveNotesDialog d = new DetectiveNotesDialog(gameBoard);
+					d.setDefaultCloseOperation(HIDE_ON_CLOSE);
 					d.setVisible(true);
 				}
 			}

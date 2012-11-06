@@ -17,6 +17,7 @@ public class Board extends JPanel{
 	private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private Set<Integer> path = new HashSet<Integer>();
 	private List<Player> players = new ArrayList<Player>(); // contains all players
+	private List<String> weapons = new ArrayList<String>(); // contains all players
 	private HumanPlayer human;
 	private List<Card> cards = new LinkedList<Card>();
 	private CardSet solution;
@@ -274,7 +275,9 @@ public class Board extends JPanel{
 		Scanner scan = new Scanner(reader);
 
 		while (scan.hasNextLine()) {
-			cards.add(new Card(scan.nextLine(), CardType.WEAPON));
+			String currentLine = scan.nextLine();
+			cards.add(new Card(currentLine, CardType.WEAPON));
+			weapons.add(currentLine);
 		}
 
 		scan.close();
@@ -351,6 +354,9 @@ public class Board extends JPanel{
 
 	}
 
+	public List<String> getWeapons() {
+		return weapons;
+	}
 	public void setSolution(CardSet solution) {
 		this.solution = solution;
 	}
