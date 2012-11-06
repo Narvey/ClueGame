@@ -8,32 +8,38 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.Window;
 
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 public class DetectiveNotesDialog extends JDialog {
 
-	private JPanel peoplePanel = new JPanel();
-	private JPanel personGuessPanel = new JPanel();
-	private JPanel RoomsPanel = new JPanel();
-	private JPanel roomGuessPanel = new JPanel();
-	private JPanel WeaponsPanel = new JPanel();
-	private JPanel weaponGuessPanel = new JPanel();
 	private Board gameBoard;
 	
+	private JPanel peoplePanel = new JPanel();
+	private JPanel personGuessPanel = new JPanel();
+	private JPanel roomsPanel = new JPanel();
+	private JPanel roomGuessPanel = new JPanel();
+	private JPanel weaponsPanel = new JPanel();
+	private JPanel weaponGuessPanel = new JPanel();
+	
 	public DetectiveNotesDialog(Board b) {
-		gameBoard =b;
+		gameBoard = b;
 		setLayout(new GridLayout(3, 0));
-		setSize(500, 800);
+		setSize(500, 500);
 		fillPeoplePanel();
 		fillRoomsPanel();
 		fillWeaponsPanel();
+		fillPersonGuessPanel();
+		fillRoomGuessPanel();
+		fillWeaponGuessPanel();
 		add(peoplePanel);
 		add(personGuessPanel);
-		add(RoomsPanel);
+		add(roomsPanel);
 		add(roomGuessPanel);
-		add(WeaponsPanel);
+		add(weaponsPanel);
 		add(weaponGuessPanel);
 		
 		//TODO add 
@@ -43,22 +49,59 @@ public class DetectiveNotesDialog extends JDialog {
 		peoplePanel.setLayout(new GridLayout(0,2));
 		peoplePanel.setBorder(new TitledBorder("People"));
 		for(Player p : gameBoard.getPlayers()) {
-			peoplePanel.add(new Checkbox(p.getName()));
+			peoplePanel.add(new JCheckBox(p.getName()));
 		}
 	}
+	
 	private void fillRoomsPanel () {
-		RoomsPanel.setLayout(new GridLayout(0,2));
-		RoomsPanel.setBorder(new TitledBorder("Rooms"));
+		roomsPanel.setLayout(new GridLayout(0,2));
+		roomsPanel.setBorder(new TitledBorder("Rooms"));
 		for(String s : gameBoard.getRooms().values()) {
-			RoomsPanel.add(new Checkbox(s));
+			roomsPanel.add(new JCheckBox(s));
 		}
 	}
+	
 	private void fillWeaponsPanel () {
-		WeaponsPanel.setLayout(new GridLayout(0,2));
-		WeaponsPanel.setBorder(new TitledBorder("Weapons"));
+		weaponsPanel.setLayout(new GridLayout(0,2));
+		weaponsPanel.setBorder(new TitledBorder("Weapons"));
 		for(String p : gameBoard.getWeapons()) {
-			WeaponsPanel.add(new Checkbox(p));
+			weaponsPanel.add(new JCheckBox(p));
 		}
 	}
+	
+	private void fillPersonGuessPanel () {
+		personGuessPanel.setLayout(new GridLayout(0,2));
+		personGuessPanel.setBorder(new TitledBorder("Person Guess"));
+		JComboBox combo = new JComboBox();
+		combo.addItem("Unsure");
+		for(Player player : gameBoard.getPlayers()) {
+			combo.addItem(player.getName());
+		}
+		personGuessPanel.add(combo);
+	}
+	
+	private void fillRoomGuessPanel () {
+		roomGuessPanel.setLayout(new GridLayout(0,2));
+		roomGuessPanel.setBorder(new TitledBorder("Room Guess"));
+		JComboBox combo = new JComboBox();
+		combo.addItem("Unsure");
+		for(String str : gameBoard.getRooms().values()) {
+			combo.addItem(str);
+		}
+		roomGuessPanel.add(combo);
+	}
+	
+	
+	private void fillWeaponGuessPanel () {
+		weaponGuessPanel.setLayout(new GridLayout(0,2));
+		weaponGuessPanel.setBorder(new TitledBorder("Weapons"));
+		JComboBox combo = new JComboBox();
+		combo.addItem("Unsure");
+		for(String str : gameBoard.getWeapons()) {
+			combo.addItem(str);
+		}
+		weaponGuessPanel.add(combo);
+	}
+	
 
 }

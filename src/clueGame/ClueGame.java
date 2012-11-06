@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 
 public class ClueGame extends JFrame {
 	JMenuItem item = new JMenuItem("Exit");
@@ -50,7 +51,7 @@ public class ClueGame extends JFrame {
 				if(e.getSource()==item) System.exit(0);
 				else if (e.getSource()==item2){
 					DetectiveNotesDialog d = new DetectiveNotesDialog(gameBoard);
-					d.setDefaultCloseOperation(HIDE_ON_CLOSE);
+					d.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 					d.setVisible(true);
 				}
 			}
