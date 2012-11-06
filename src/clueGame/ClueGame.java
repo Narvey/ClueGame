@@ -23,7 +23,7 @@ public class ClueGame extends JFrame {
 		// Adding Board to JFrame
 		gameBoard = new Board();
 		try {
-			gameBoard.loadConfigFiles("CR-ClueLayout.csv", "CR-ClueLayout.csv", "weapons.txt", "players.txt");
+			gameBoard.loadConfigFiles("CR-ClueLegend.txt", "CR-ClueLayout.csv", "weapons.txt", "players.txt");
 		} catch (BadConfigFormatException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		} catch (IOException e) {

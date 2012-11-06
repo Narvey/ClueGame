@@ -48,24 +48,24 @@ public class DetectiveNotesDialog extends JDialog {
 	private void fillPeoplePanel () {
 		peoplePanel.setLayout(new GridLayout(0,2));
 		peoplePanel.setBorder(new TitledBorder("People"));
-		for(Player p : gameBoard.getPlayers()) {
-			peoplePanel.add(new JCheckBox(p.getName()));
+		for(Player player : gameBoard.getPlayers()) {
+			peoplePanel.add(new JCheckBox(player.getName()));
 		}
 	}
 	
 	private void fillRoomsPanel () {
 		roomsPanel.setLayout(new GridLayout(0,2));
 		roomsPanel.setBorder(new TitledBorder("Rooms"));
-		for(String s : gameBoard.getRooms().values()) {
-			roomsPanel.add(new JCheckBox(s));
+		for(String str : gameBoard.getRooms().values()) {
+			roomsPanel.add(new JCheckBox(str));
 		}
 	}
 	
 	private void fillWeaponsPanel () {
 		weaponsPanel.setLayout(new GridLayout(0,2));
 		weaponsPanel.setBorder(new TitledBorder("Weapons"));
-		for(String p : gameBoard.getWeapons()) {
-			weaponsPanel.add(new JCheckBox(p));
+		for(String str : gameBoard.getWeapons()) {
+			weaponsPanel.add(new JCheckBox(str));
 		}
 	}
 	
