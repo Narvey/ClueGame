@@ -27,6 +27,7 @@ public class DetectiveNotesDialog extends JDialog {
 	
 	public DetectiveNotesDialog(Board b) {
 		gameBoard = b;
+		setTitle("Detective Notes");
 		setLayout(new GridLayout(3, 0));
 		setSize(500, 500);
 		fillPeoplePanel();

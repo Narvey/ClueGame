@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class ClueGame extends JFrame {
-	JMenuItem item = new JMenuItem("Exit");
-	JMenuItem item2 = new JMenuItem("Show Detective Notes");
+	JMenuItem exitMenuItem = new JMenuItem("Exit");
+	JMenuItem detectiveNotesMenuItem = new JMenuItem("Show Detective Notes");
 	Board gameBoard;
 	
 	public ClueGame() {
@@ -48,18 +48,19 @@ public class ClueGame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(e.getSource()==item) System.exit(0);
-				else if (e.getSource()==item2){
+				if(e.getSource()==exitMenuItem) System.exit(0);
+				else if (e.getSource()==detectiveNotesMenuItem){
 					DetectiveNotesDialog d = new DetectiveNotesDialog(gameBoard);
 					d.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 					d.setVisible(true);
 				}
 			}
 		}
-		item.addActionListener(new MenuItemListener());
-		item2.addActionListener(new MenuItemListener());
-		menu.add(item);
-		menu.add(item2);
+		exitMenuItem.addActionListener(new MenuItemListener());
+		detectiveNotesMenuItem.addActionListener(new MenuItemListener());
+		menu.add(detectiveNotesMenuItem);
+		menu.add(exitMenuItem);
+		
 		return menu;
 	}
 
