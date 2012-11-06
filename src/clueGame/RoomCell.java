@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class RoomCell extends BoardCell {
-	public static final int DOORWIDTH = 15;///width, in pixels, of the door.
+	public static final int DOORWIDTH = 5;///width, in pixels, of the door.
 	public enum DoorDirection {
 		UP, DOWN, LEFT, RIGHT, NONE
 	}
@@ -75,7 +75,7 @@ public class RoomCell extends BoardCell {
 			g.fillRect(x+brd.CELLSIZE-DOORWIDTH, y, DOORWIDTH, brd.CELLSIZE);
 			break;
 		default:
-			g.drawString(String.valueOf(initial), x, y+brd.CELLSIZE/2);
+			//g.drawString(String.valueOf(initial), x, y+brd.CELLSIZE/2);
 			break;
 		}
 	}

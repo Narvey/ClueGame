@@ -20,7 +20,7 @@ public class Board extends JPanel{
 	private HumanPlayer human;
 	private List<Card> cards = new LinkedList<Card>();
 	private CardSet solution;
-	public static final int CELLSIZE=30;
+	public static final int CELLSIZE=20;
 	private int numRows;
 	private int numColumns;
 
