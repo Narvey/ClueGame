@@ -42,8 +42,6 @@ public class DetectiveNotesDialog extends JDialog {
 		add(roomGuessPanel);
 		add(weaponsPanel);
 		add(weaponGuessPanel);
-		
-		//TODO add 
 	}
 	
 	private void fillPeoplePanel () {
