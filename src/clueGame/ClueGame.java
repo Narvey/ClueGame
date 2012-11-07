@@ -31,17 +31,17 @@ public class ClueGame extends JFrame {
 			System.exit(0);
 		}
 		getContentPane().add(new JScrollPane(gameBoard));
-//		//setLayout(new BorderLayout());
-//		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
-//		JScrollPane pane = new JScrollPane(gameBoard);
-//		pane.setSize(this.getWidth(), this.getHeight());
-//		//pane.add(gameBoard);
-//		getContentPane().add(pane, BorderLayout.CENTER);
-//		
-//		// Adding the file menu to JFrame
-//		JMenuBar menuBar = new JMenuBar();
-//		setJMenuBar(menuBar);
-//		menuBar.add(createFileMenu());
+		//setLayout(new BorderLayout());
+		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
+		JScrollPane pane = new JScrollPane(gameBoard);
+		pane.setSize(this.getWidth(), this.getHeight());
+		//pane.add(gameBoard);
+		getContentPane().add(pane, BorderLayout.CENTER);
+		
+		// Adding the file menu to JFrame
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createFileMenu());
 	}
 	
 	private JMenu createFileMenu() {
