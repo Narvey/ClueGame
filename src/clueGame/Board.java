@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.FileReader;
 import java.io.IOException;
@@ -36,6 +37,11 @@ public class Board extends JPanel{
 		}
 	}
 	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(numColumns*CELLSIZE, numRows*CELLSIZE);
+	}
+
 	public int calcIndex(int row, int col) {
 		int index = (row * numColumns) + col;
 		return index;

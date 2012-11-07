@@ -1,7 +1,6 @@
 package clueGame;
 
 import java.awt.BorderLayout;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -11,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 public class ClueGame extends JFrame {
@@ -30,16 +30,18 @@ public class ClueGame extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			System.exit(0);
 		}
-		setLayout(new BorderLayout());
-		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
-		ScrollPane pane = new ScrollPane();
-		pane.add(gameBoard);
-		add(pane, BorderLayout.CENTER);
-		
-		// Adding the file menu to JFrame
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		menuBar.add(createFileMenu());
+		getContentPane().add(new JScrollPane(gameBoard));
+//		//setLayout(new BorderLayout());
+//		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
+//		JScrollPane pane = new JScrollPane(gameBoard);
+//		pane.setSize(this.getWidth(), this.getHeight());
+//		//pane.add(gameBoard);
+//		getContentPane().add(pane, BorderLayout.CENTER);
+//		
+//		// Adding the file menu to JFrame
+//		JMenuBar menuBar = new JMenuBar();
+//		setJMenuBar(menuBar);
+//		menuBar.add(createFileMenu());
 	}
 	
 	private JMenu createFileMenu() {
