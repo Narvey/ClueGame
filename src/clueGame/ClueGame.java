@@ -3,6 +3,8 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -30,7 +32,7 @@ public class ClueGame extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			System.exit(0);
 		}
-		getContentPane().add(new JScrollPane(gameBoard));
+		add(new JScrollPane(gameBoard));
 		//setLayout(new BorderLayout());
 		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
 		JScrollPane pane = new JScrollPane(gameBoard);
@@ -41,7 +43,23 @@ public class ClueGame extends JFrame {
 		// Adding the file menu to JFrame
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		menuBar.add(createFileMenu());
+		menuBar.add(createFileMenu());		
+		gameBoard.addMouseListener(new clueMouseListener());
+	}
+	
+	private class clueMouseListener implements MouseListener{
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Change this to something useful
+			JOptionPane.showInputDialog("Yeah, man");
+		}
+		
+		//Don't need to do anything with the following events
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
+		
 	}
 	
 	private JMenu createFileMenu() {
