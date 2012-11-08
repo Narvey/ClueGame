@@ -16,9 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 public class ClueGame extends JFrame {
-	JMenuItem exitMenuItem = new JMenuItem("Exit");
-	JMenuItem detectiveNotesMenuItem = new JMenuItem("Show Detective Notes");
-	Board gameBoard;
+	private JMenuItem exitMenuItem = new JMenuItem("Exit");
+	private JMenuItem detectiveNotesMenuItem = new JMenuItem("Show Detective Notes");
+	private Board gameBoard;
+	private DetectiveNotesDialog detectiveNotes;
 	
 	public ClueGame() {
 		super();
@@ -57,9 +58,11 @@ public class ClueGame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==exitMenuItem) System.exit(0);
 				else if (e.getSource()==detectiveNotesMenuItem){
-					DetectiveNotesDialog d = new DetectiveNotesDialog(gameBoard);
-					d.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-					d.setVisible(true);
+					if(detectiveNotes == null) {
+						detectiveNotes = new DetectiveNotesDialog(gameBoard);
+						detectiveNotes.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+					}
+					detectiveNotes.setVisible(true);
 				}
 			}
 		}
