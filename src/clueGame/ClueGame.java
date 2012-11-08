@@ -36,6 +36,7 @@ public class ClueGame extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			System.exit(0);
 		}
+		gameBoard.deal();
 		add(new JScrollPane(gameBoard));
 		//setLayout(new BorderLayout());
 		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);

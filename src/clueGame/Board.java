@@ -42,8 +42,7 @@ public class Board extends JPanel implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Change this to something useful
-		JOptionPane.showConfirmDialog(this, "Do you really want to do nothing?");
+		// TODO Put something useful here
 	}
 
 
@@ -360,14 +359,6 @@ public class Board extends JPanel implements MouseListener{
 		player.setName(line[0]);
 		player.setPieceColor(Color.decode(line[1]));
 		player.setCellIndex(Integer.parseInt(line[2]));
-		// players need cards.
-		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		Set<Card> s = new HashSet<Card>();
-		s.add(new Card("Tri Nguyen", CardType.PERSON));
-		s.add(new Card("Weapon Room", CardType.ROOM));
-		s.add(new Card("AK-47", CardType.WEAPON));
-		player.setCards(s);
-		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	}
 
 	public void clearPlayers() {
