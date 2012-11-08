@@ -3,15 +3,19 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import clueGame.Card.CardType;
 import clueGame.RoomCell.DoorDirection;
 
-public class Board extends JPanel{
+public class Board extends JPanel implements MouseListener{
 	private ArrayList<BoardCell> cells = new ArrayList<BoardCell>();
 	private Map<Character, String> rooms = new TreeMap<Character, String>();
 	private Map<Integer, LinkedList<Integer>> adjacencies = new HashMap<Integer, LinkedList<Integer>>();
@@ -36,7 +40,13 @@ public class Board extends JPanel{
 			p.draw(g, this);
 		}
 	}
-	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Change this to something useful
+		JOptionPane.showConfirmDialog(this, "Do you really want to do nothing?");
+	}
+
+
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(numColumns*CELLSIZE, numRows*CELLSIZE);
@@ -366,4 +376,9 @@ public class Board extends JPanel{
 	public void setSolution(CardSet solution) {
 		this.solution = solution;
 	}
+	//Don't need to do anything with the following events
+	public void mousePressed(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
 }

@@ -44,23 +44,10 @@ public class ClueGame extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());		
-		gameBoard.addMouseListener(new clueMouseListener());
+		gameBoard.addMouseListener(gameBoard);
 	}
 	
-	private class clueMouseListener implements MouseListener{
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Change this to something useful
-			JOptionPane.showInputDialog("Yeah, man");
-		}
-		
-		//Don't need to do anything with the following events
-		public void mousePressed(MouseEvent e) {}
-		public void mouseReleased(MouseEvent e) {}
-		public void mouseEntered(MouseEvent e) {}
-		public void mouseExited(MouseEvent e) {}
-		
-	}
+	
 	
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");		
