@@ -3,6 +3,8 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -34,7 +36,7 @@ public class ClueGame extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			System.exit(0);
 		}
-		getContentPane().add(new JScrollPane(gameBoard));
+		add(new JScrollPane(gameBoard));
 		//setLayout(new BorderLayout());
 		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
 		JScrollPane pane = new JScrollPane(gameBoard);
@@ -52,8 +54,11 @@ public class ClueGame extends JFrame {
 		// Adding the file menu to JFrame
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		menuBar.add(createFileMenu());
+		menuBar.add(createFileMenu());		
+		gameBoard.addMouseListener(gameBoard);
 	}
+	
+	
 	
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");		
