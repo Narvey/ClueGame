@@ -18,11 +18,14 @@ public class ClueGame extends JFrame {
 	private JMenuItem detectiveNotesMenuItem = new JMenuItem("Show Detective Notes");
 	private Board gameBoard;
 	private DetectiveNotesDialog detectiveNotes;
+	private GameControlPanel controlPanel;
+	private PlayerDisplay playerPanel;
 	
 	public ClueGame() {
 		super();
 		// Adding Board to JFrame
 		gameBoard = new Board();
+		
 		try {
 			gameBoard.loadConfigFiles("CR-ClueLegend.txt", "CR-ClueLayout.csv", "weapons.txt", "players.txt");
 		} catch (BadConfigFormatException e) {
@@ -36,8 +39,15 @@ public class ClueGame extends JFrame {
 		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
 		JScrollPane pane = new JScrollPane(gameBoard);
 		pane.setSize(this.getWidth(), this.getHeight());
+		
+
+		controlPanel = new GameControlPanel();
+		playerPanel = new PlayerDisplay(gameBoard.getHuman());
 		//pane.add(gameBoard);
 		getContentPane().add(pane, BorderLayout.CENTER);
+		getContentPane().add(controlPanel, BorderLayout.SOUTH);
+		getContentPane().add(playerPanel, BorderLayout.EAST);
+		
 		
 		// Adding the file menu to JFrame
 		JMenuBar menuBar = new JMenuBar();
