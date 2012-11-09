@@ -322,15 +322,15 @@ public class Board extends JPanel implements MouseListener{
 			String character = stringArr[0].trim();
 			String room = stringArr[1].trim();
 			char c = character.charAt(0);
-			rooms.put(c, room);
+			if(room.compareTo("Walkway") != 0 && room.compareTo("Closet") != 0)
+				rooms.put(c, room);
 		}
 
 		scan.close();
 		reader.close();
 
 		for (String room : rooms.values()) {
-			if(room.compareTo("Walkway") != 0 && room.compareTo("Closet") != 0)
-				cards.add(new Card(room, CardType.ROOM));
+			cards.add(new Card(room, CardType.ROOM));
 		}
 	}
 
