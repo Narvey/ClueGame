@@ -80,7 +80,6 @@ public class Board extends JPanel implements MouseListener{
 		Collections.shuffle(deck);
 		
 		int i = 0;
-		System.out.println(solution);
 		while (deck.size() > 0) {
 			Card card = deck.remove(0); // the deck is shuffled, so just remove the first card
 			String cardName = card.getName();

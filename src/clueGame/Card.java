@@ -46,7 +46,7 @@ public class Card {
 	
 	@Override
 	public String toString() {
-		return name + "-" + type.toString();
+		return type.toString() + ": " + name;
 	}
 	
 	@Override

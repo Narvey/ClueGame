@@ -25,8 +25,7 @@ public class CardSet {
 
 	@Override
 	public String toString() {
-		return "CardSet [person=" + person + ", weapon=" + weapon + ", room="
-				+ room + "]";
+		return "[" + person + ", " + weapon + ", " + room + "]";
 	}
 	
 	

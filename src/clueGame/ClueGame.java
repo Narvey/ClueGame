@@ -44,9 +44,7 @@ public class ClueGame extends JFrame {
 		// Code to pick solution
 		LinkedList<Card> deck = new LinkedList<Card>(gameBoard.getCards()); 
 		Collections.shuffle(deck);
-		Card person = null;
-		Card weapon = null;
-		Card room = null;
+		Card person = null, weapon = null, room = null;
 		while(person == null || weapon == null || room == null) {
 			Card card = deck.remove(0);
 			if(card.getType() == CardType.PERSON && person == null) {
@@ -69,18 +67,9 @@ public class ClueGame extends JFrame {
 		JScrollPane pane = new JScrollPane(gameBoard);
 		pane.setSize(this.getWidth(), this.getHeight());
 		
-
 		controlPanel = new GameControlPanel();
 		playerPanel = new PlayerDisplay(gameBoard.getHuman());
 
-		for(Player p : gameBoard.getPlayers()) {
-			Set<Card> cards = p.getCards();
-			System.out.print(p.getName() + " -> ");
-			for(Card card : cards) {
-				System.out.print(card + "|");
-			}
-			System.out.println(" ");
-		}
 		//pane.add(gameBoard);
 		getContentPane().add(pane, BorderLayout.CENTER);
 		getContentPane().add(controlPanel, BorderLayout.SOUTH);
