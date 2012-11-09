@@ -82,10 +82,11 @@ public class Board extends JPanel implements MouseListener{
 		int i = 0;
 		while (deck.size() > 0) {
 			Card card = deck.remove(0); // the deck is shuffled, so just remove the first card
-
-			players.get(i).giveCard(card);
-
-			i = (i + 1) % players.size();
+			
+			if(!card.equals(solution.getPerson()) && !card.equals(solution.getRoom()) && !card.equals(solution.getWeapon())) {
+				players.get(i).giveCard(card);
+				i = (i + 1) % players.size();
+			}
 		}
 	}
 
@@ -319,14 +320,16 @@ public class Board extends JPanel implements MouseListener{
 			String character = stringArr[0];
 			String room = stringArr[1];
 			char c = character.charAt(0);
-			rooms.put(c, room);
+			rooms.put(c, room.trim());
 		}
 
 		scan.close();
 		reader.close();
 
 		for (String room : rooms.values()) {
-			cards.add(new Card(room, CardType.ROOM));
+			if(!room.equalsIgnoreCase("Walkway") && !room.equalsIgnoreCase("Closet")) {
+				cards.add(new Card(room, CardType.ROOM));
+			}
 		}
 	}
 

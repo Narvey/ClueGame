@@ -1,11 +1,13 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -14,6 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
+
+import clueGame.Card.CardType;
 
 public class ClueGame extends JFrame {
 	private JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -36,7 +40,14 @@ public class ClueGame extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			System.exit(0);
 		}
+		
+
+		// Code to set solution cards
+
+		gameBoard.setSolution(pickSolution(gameBoard.getCards()));
+		
 		gameBoard.deal();
+		
 		add(new JScrollPane(gameBoard));
 		//setLayout(new BorderLayout());
 		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
@@ -46,6 +57,15 @@ public class ClueGame extends JFrame {
 
 		controlPanel = new GameControlPanel();
 		playerPanel = new PlayerDisplay(gameBoard.getHuman());
+
+		for(Player p : gameBoard.getPlayers()) {
+			Set<Card> cards = p.getCards();
+			System.out.print(p.getName() + " -> ");
+			for(Card card : cards) {
+				System.out.print(card + "|");
+			}
+			System.out.println(" ");
+		}
 		//pane.add(gameBoard);
 		getContentPane().add(pane, BorderLayout.CENTER);
 		getContentPane().add(controlPanel, BorderLayout.SOUTH);
@@ -83,6 +103,26 @@ public class ClueGame extends JFrame {
 		menu.add(exitMenuItem);
 		
 		return menu;
+	}
+	
+	private CardSet pickSolution(java.util.List<Card> list) {
+		Collections.shuffle(list);
+		Card person = null;
+		Card weapon = null;
+		Card room = null;
+		while(person == null || weapon == null || room == null) {
+			Card card = list.remove(0);
+			if(card.getType() == CardType.PERSON && person == null) {
+				person = card;
+			}
+			else if(card.getType() == CardType.WEAPON && weapon == null) {
+				weapon = card;
+			}
+			else if(card.getType() == CardType.ROOM && room == null) {
+				room = card;
+			}
+		}
+		return new CardSet(person, weapon, room);
 	}
 
 	public static void main(String[] args) {
