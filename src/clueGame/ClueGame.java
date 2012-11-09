@@ -57,7 +57,6 @@ public class ClueGame extends JFrame {
 				room = card;
 			}
 		}
-		
 		gameBoard.setSolution(new CardSet(person, weapon, room));
 		gameBoard.deal();
 		
@@ -81,6 +80,11 @@ public class ClueGame extends JFrame {
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());		
 		gameBoard.addMouseListener(gameBoard);
+		
+		// Adding Splash Screen.
+		String message = "You are " + gameBoard.getHuman().getName() + ", press Next Player to begin to play.";
+		String title = "Welcome to Clue";
+		JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	
