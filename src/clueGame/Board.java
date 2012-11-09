@@ -78,12 +78,15 @@ public class Board extends JPanel implements MouseListener{
 
 		List<Card> deck = new LinkedList<Card>(cards); // duplicate the cards list for dealing
 		Collections.shuffle(deck);
-
+		
 		int i = 0;
+		System.out.println(solution);
 		while (deck.size() > 0) {
 			Card card = deck.remove(0); // the deck is shuffled, so just remove the first card
-			
-			if(!card.equals(solution.getPerson()) && !card.equals(solution.getRoom()) && !card.equals(solution.getWeapon())) {
+			String cardName = card.getName();
+			if(cardName.compareTo(solution.getPerson().getName()) != 0 &&
+					cardName.compareTo(solution.getRoom().getName()) != 0 && 
+					cardName.compareTo(solution.getWeapon().getName()) != 0) {
 				players.get(i).giveCard(card);
 				i = (i + 1) % players.size();
 			}
@@ -291,7 +294,7 @@ public class Board extends JPanel implements MouseListener{
 		Scanner scan = new Scanner(reader);
 
 		while (scan.hasNextLine()) {
-			String currentLine = scan.nextLine();
+			String currentLine = scan.nextLine().trim();
 			cards.add(new Card(currentLine, CardType.WEAPON));
 			weapons.add(currentLine);
 		}
@@ -317,19 +320,18 @@ public class Board extends JPanel implements MouseListener{
 				throw new BadConfigFormatException("Comma missing in file " + legendFile);
 			}
 			String[] stringArr = wholeString.split(",");
-			String character = stringArr[0];
-			String room = stringArr[1];
+			String character = stringArr[0].trim();
+			String room = stringArr[1].trim();
 			char c = character.charAt(0);
-			rooms.put(c, room.trim());
+			rooms.put(c, room);
 		}
 
 		scan.close();
 		reader.close();
 
 		for (String room : rooms.values()) {
-			if(!room.equalsIgnoreCase("Walkway") && !room.equalsIgnoreCase("Closet")) {
+			if(room.compareTo("Walkway") != 0 && room.compareTo("Closet") != 0)
 				cards.add(new Card(room, CardType.ROOM));
-			}
 		}
 	}
 
@@ -359,9 +361,9 @@ public class Board extends JPanel implements MouseListener{
 		if (line.length != 3) {
 			throw new BadConfigFormatException("Wrong number of values in line " + line + " of players file");
 		}
-		player.setName(line[0]);
-		player.setPieceColor(Color.decode(line[1]));
-		player.setCellIndex(Integer.parseInt(line[2]));
+		player.setName(line[0].trim());
+		player.setPieceColor(Color.decode(line[1].trim()));
+		player.setCellIndex(Integer.parseInt(line[2].trim()));
 	}
 
 	public void clearPlayers() {

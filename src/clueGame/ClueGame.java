@@ -41,11 +41,26 @@ public class ClueGame extends JFrame {
 			System.exit(0);
 		}
 		
-
-		// Code to set solution cards
-
-		gameBoard.setSolution(pickSolution(gameBoard.getCards()));
+		// Code to pick solution
+		LinkedList<Card> deck = new LinkedList<Card>(gameBoard.getCards()); 
+		Collections.shuffle(deck);
+		Card person = null;
+		Card weapon = null;
+		Card room = null;
+		while(person == null || weapon == null || room == null) {
+			Card card = deck.remove(0);
+			if(card.getType() == CardType.PERSON && person == null) {
+				person = card;
+			}
+			else if(card.getType() == CardType.WEAPON && weapon == null) {
+				weapon = card;
+			}
+			else if(card.getType() == CardType.ROOM && room == null) {
+				room = card;
+			}
+		}
 		
+		gameBoard.setSolution(new CardSet(person, weapon, room));
 		gameBoard.deal();
 		
 		add(new JScrollPane(gameBoard));
@@ -103,26 +118,6 @@ public class ClueGame extends JFrame {
 		menu.add(exitMenuItem);
 		
 		return menu;
-	}
-	
-	private CardSet pickSolution(java.util.List<Card> list) {
-		Collections.shuffle(list);
-		Card person = null;
-		Card weapon = null;
-		Card room = null;
-		while(person == null || weapon == null || room == null) {
-			Card card = list.remove(0);
-			if(card.getType() == CardType.PERSON && person == null) {
-				person = card;
-			}
-			else if(card.getType() == CardType.WEAPON && weapon == null) {
-				weapon = card;
-			}
-			else if(card.getType() == CardType.ROOM && room == null) {
-				room = card;
-			}
-		}
-		return new CardSet(person, weapon, room);
 	}
 
 	public static void main(String[] args) {
