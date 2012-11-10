@@ -6,7 +6,10 @@ import java.awt.Graphics;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+
 import javax.swing.JPanel;
+
+import org.junit.runners.ParentRunner;
 
 import clueGame.Card.CardType;
 import clueGame.RoomCell.DoorDirection;
@@ -14,11 +17,12 @@ import clueGame.RoomCell.DoorDirection;
 public class Board extends JPanel{
 	private ArrayList<BoardCell> cells = new ArrayList<BoardCell>();
 	private Map<Character, String> rooms = new TreeMap<Character, String>();
+	private Map<Integer, String> labels = new TreeMap<Integer, String>();
 	private Map<Integer, LinkedList<Integer>> adjacencies = new HashMap<Integer, LinkedList<Integer>>();
 	private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private Set<Integer> path = new HashSet<Integer>();
 	private List<Player> players = new ArrayList<Player>(); // contains all players
-	private List<String> weapons = new ArrayList<String>(); // contains all players
+	private List<String> weapons = new ArrayList<String>();
 	private HumanPlayer human;
 	private List<Card> cards = new LinkedList<Card>();
 	private CardSet solution;
@@ -31,6 +35,11 @@ public class Board extends JPanel{
 		super.paintComponent(g);
 		for(BoardCell o : cells){
 			o.draw(g, this);
+		}
+		for(Integer i : labels.keySet()){//		int index = (row * numColumns) + col;
+			int x = i%numColumns*CELLSIZE;
+			int y = i/numColumns*CELLSIZE;
+			g.drawString(labels.get(i), x, y);
 		}
 		for(Player p : players){
 			p.draw(g, this);
@@ -308,9 +317,15 @@ public class Board extends JPanel{
 			}
 			String[] stringArr = wholeString.split(",");
 			String character = stringArr[0];
-			String room = stringArr[1];
+			String room = stringArr[1].trim();
 			char c = character.charAt(0);
 			rooms.put(c, room);
+			try{
+				labels.put(calcIndex(Integer.parseInt(stringArr[2].trim()),Integer.parseInt(stringArr[3].trim())),room);
+			}catch(NumberFormatException e){
+				throw new BadConfigFormatException(e.getMessage().substring(18) + " is not an integer.");
+			}
+			//Add label location from the config file.
 		}
 
 		scan.close();
