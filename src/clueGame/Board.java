@@ -36,10 +36,10 @@ public class Board extends JPanel{
 		for(BoardCell o : cells){
 			o.draw(g, this);
 		}
-		for(Integer i : labels.keySet()){//		int index = (row * numColumns) + col;
-			int x = (i%numColumns)*CELLSIZE;
-			int y = (i/numColumns)*CELLSIZE;
-			g.drawString(labels.get(i), x, y);
+		for(Integer i : labels.keySet()){
+			int x = getCellAt(i).getCol()*CELLSIZE; //(i%numColumns)*CELLSIZE;
+			int y = getCellAt(i).getRow()*CELLSIZE; //(i/numColumns)*CELLSIZE;
+			g.drawString(labels.get(i), x, y+CELLSIZE/2);
 		}
 		for(Player p : players){
 			p.draw(g, this);
@@ -52,8 +52,7 @@ public class Board extends JPanel{
 	}
 
 	public int calcIndex(int row, int col) {
-		int index = (row * numColumns) + col;
-		return index;
+		return (row * numColumns) + col;
 	}
 
 	private void calcTargets(int calcIndex, int steps) {
