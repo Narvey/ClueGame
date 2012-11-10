@@ -299,8 +299,8 @@ public class Board extends JPanel{
 	}
 
 	public void loadConfigFiles(String legendFile, String boardFile, String weaponsFile, String playersFile) throws BadConfigFormatException, IOException {
-		loadLegend(legendFile);
 		loadBoard(boardFile);
+		loadLegend(legendFile);
 		loadPlayers(playersFile);
 		loadWeapons(weaponsFile);
 	}
@@ -319,6 +319,8 @@ public class Board extends JPanel{
 			String room = stringArr[1].trim();
 			char c = character.charAt(0);
 			rooms.put(c, room);
+			if(stringArr[2].trim().equals("X"))continue;
+			//X means don't draw the name.
 			try{
 				labels.put(calcIndex(Integer.parseInt(stringArr[2].trim()),Integer.parseInt(stringArr[3].trim())),room);
 			}catch(NumberFormatException e){

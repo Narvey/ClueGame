@@ -75,7 +75,8 @@ public class RoomCell extends BoardCell {
 			g.fillRect(x+brd.CELLSIZE-DOORWIDTH, y, DOORWIDTH, brd.CELLSIZE);
 			break;
 		default:
-			g.drawString(String.valueOf(initial), x, y+brd.CELLSIZE/2);
+			//g.drawString(String.valueOf(initial), x, y+brd.CELLSIZE/2);
+			//Draws the room initial for debugging.
 			break;
 		}
 	}
