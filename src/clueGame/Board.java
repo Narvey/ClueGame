@@ -27,8 +27,8 @@ public class Board extends JPanel{
 	private List<Card> cards = new LinkedList<Card>();
 	private CardSet solution;
 	public static final int CELLSIZE=20;
-	private int numRows;
-	private int numColumns;
+	private int numRows=15;
+	private int numColumns=15;//Default values avoid miniscule window.
 
 	@Override
 	public void paintComponent(Graphics g){
@@ -37,8 +37,8 @@ public class Board extends JPanel{
 			o.draw(g, this);
 		}
 		for(Integer i : labels.keySet()){//		int index = (row * numColumns) + col;
-			int x = i%numColumns*CELLSIZE;
-			int y = i/numColumns*CELLSIZE;
+			int x = (i%numColumns)*CELLSIZE;
+			int y = (i/numColumns)*CELLSIZE;
 			g.drawString(labels.get(i), x, y);
 		}
 		for(Player p : players){

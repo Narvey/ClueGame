@@ -1,4 +1,4 @@
-C, Conservatory, 2w, 1
+C, Conservatory, 2, 1
 K, Kitchen, 18, 1
 B, Ballroom, 8, 3
 R, Billiard room, 2, 8
