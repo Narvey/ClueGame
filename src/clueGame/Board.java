@@ -8,33 +8,38 @@ import java.awt.event.MouseListener;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import org.junit.runners.ParentRunner;
 import clueGame.Card.CardType;
 import clueGame.RoomCell.DoorDirection;
 
 public class Board extends JPanel implements MouseListener{
 	private ArrayList<BoardCell> cells = new ArrayList<BoardCell>();
 	private Map<Character, String> rooms = new TreeMap<Character, String>();
+	private Map<Integer, String> labels = new TreeMap<Integer, String>();
 	private Map<Integer, LinkedList<Integer>> adjacencies = new HashMap<Integer, LinkedList<Integer>>();
 	private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private Set<Integer> path = new HashSet<Integer>();
 	private List<Player> players = new ArrayList<Player>(); // contains all players
-	private List<String> weapons = new ArrayList<String>(); // contains all players
+	private List<String> weapons = new ArrayList<String>();
 	private HumanPlayer human;
 	private List<Card> cards = new LinkedList<Card>();
 	private CardSet solution;
 	public static final int CELLSIZE=20;
-	private int numRows;
-	private int numColumns;
+	private int numRows=15;
+	private int numColumns=15;//Default values avoid miniscule window.
 
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		for(BoardCell o : cells){
 			o.draw(g, this);
+		}
+		for(Integer i : labels.keySet()){
+			int x = getCellAt(i).getCol()*CELLSIZE; //(i%numColumns)*CELLSIZE;
+			int y = getCellAt(i).getRow()*CELLSIZE; //(i/numColumns)*CELLSIZE;
+			g.drawString(labels.get(i), x, y+CELLSIZE/2);
 		}
 		for(Player p : players){
 			p.draw(g, this);
@@ -51,8 +56,7 @@ public class Board extends JPanel implements MouseListener{
 	}
 
 	public int calcIndex(int row, int col) {
-		int index = (row * numColumns) + col;
-		return index;
+		return (row * numColumns) + col;
 	}
 
 	private void calcTargets(int calcIndex, int steps) {
@@ -302,8 +306,8 @@ public class Board extends JPanel implements MouseListener{
 	}
 
 	public void loadConfigFiles(String legendFile, String boardFile, String weaponsFile, String playersFile) throws BadConfigFormatException, IOException {
-		loadLegend(legendFile);
 		loadBoard(boardFile);
+		loadLegend(legendFile);
 		loadPlayers(playersFile);
 		loadWeapons(weaponsFile);
 	}
@@ -318,11 +322,20 @@ public class Board extends JPanel implements MouseListener{
 				throw new BadConfigFormatException("Comma missing in file " + legendFile);
 			}
 			String[] stringArr = wholeString.split(",");
-			String character = stringArr[0].trim();
+			String character = stringArr[0];
 			String room = stringArr[1].trim();
-			char c = character.charAt(0);
+			char c = character.charAt(0);			
 			if(room.compareTo("Walkway") != 0 && room.compareTo("Closet") != 0)
-				rooms.put(c, room);
+			rooms.put(c, room);
+			if(stringArr[2].trim().equals("X"))continue;
+			//X means don't draw the name.
+			try{
+				labels.put(calcIndex(Integer.parseInt(stringArr[2].trim()),Integer.parseInt(stringArr[3].trim())),room);
+			}catch(NumberFormatException e){
+				throw new BadConfigFormatException(e.getMessage().substring(18) + " is not an integer.");
+			}
+			//Add label location from the config file.
+
 		}
 
 		scan.close();
