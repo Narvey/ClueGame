@@ -3,18 +3,18 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import org.junit.runners.ParentRunner;
-
 import clueGame.Card.CardType;
 import clueGame.RoomCell.DoorDirection;
 
-public class Board extends JPanel{
+public class Board extends JPanel implements MouseListener{
 	private ArrayList<BoardCell> cells = new ArrayList<BoardCell>();
 	private Map<Character, String> rooms = new TreeMap<Character, String>();
 	private Map<Integer, String> labels = new TreeMap<Integer, String>();
@@ -45,7 +45,12 @@ public class Board extends JPanel{
 			p.draw(g, this);
 		}
 	}
-	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Put something useful here
+	}
+
+
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(numColumns*CELLSIZE, numRows*CELLSIZE);
@@ -77,14 +82,17 @@ public class Board extends JPanel{
 
 		List<Card> deck = new LinkedList<Card>(cards); // duplicate the cards list for dealing
 		Collections.shuffle(deck);
-
+		
 		int i = 0;
 		while (deck.size() > 0) {
 			Card card = deck.remove(0); // the deck is shuffled, so just remove the first card
-
-			players.get(i).giveCard(card);
-
-			i = (i + 1) % players.size();
+			String cardName = card.getName();
+			if(cardName.compareTo(solution.getPerson().getName()) != 0 &&
+					cardName.compareTo(solution.getRoom().getName()) != 0 && 
+					cardName.compareTo(solution.getWeapon().getName()) != 0) {
+				players.get(i).giveCard(card);
+				i = (i + 1) % players.size();
+			}
 		}
 	}
 
@@ -289,7 +297,7 @@ public class Board extends JPanel{
 		Scanner scan = new Scanner(reader);
 
 		while (scan.hasNextLine()) {
-			String currentLine = scan.nextLine();
+			String currentLine = scan.nextLine().trim();
 			cards.add(new Card(currentLine, CardType.WEAPON));
 			weapons.add(currentLine);
 		}
@@ -317,7 +325,8 @@ public class Board extends JPanel{
 			String[] stringArr = wholeString.split(",");
 			String character = stringArr[0];
 			String room = stringArr[1].trim();
-			char c = character.charAt(0);
+			char c = character.charAt(0);			
+			if(room.compareTo("Walkway") != 0 && room.compareTo("Closet") != 0)
 			rooms.put(c, room);
 			if(stringArr[2].trim().equals("X"))continue;
 			//X means don't draw the name.
@@ -327,6 +336,7 @@ public class Board extends JPanel{
 				throw new BadConfigFormatException(e.getMessage().substring(18) + " is not an integer.");
 			}
 			//Add label location from the config file.
+
 		}
 
 		scan.close();
@@ -363,9 +373,9 @@ public class Board extends JPanel{
 		if (line.length != 3) {
 			throw new BadConfigFormatException("Wrong number of values in line " + line + " of players file");
 		}
-		player.setName(line[0]);
-		player.setPieceColor(Color.decode(line[1]));
-		player.setCellIndex(Integer.parseInt(line[2]));
+		player.setName(line[0].trim());
+		player.setPieceColor(Color.decode(line[1].trim()));
+		player.setCellIndex(Integer.parseInt(line[2].trim()));
 	}
 
 	public void clearPlayers() {
@@ -382,4 +392,9 @@ public class Board extends JPanel{
 	public void setSolution(CardSet solution) {
 		this.solution = solution;
 	}
+	//Don't need to do anything with the following events
+	public void mousePressed(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
 }

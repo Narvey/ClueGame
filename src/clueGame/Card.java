@@ -18,7 +18,16 @@ public class Card {
 	}
 
 	public enum CardType {
-		ROOM, WEAPON, PERSON
+		ROOM("Room"), WEAPON("Weapon"), PERSON("Person");
+		
+		private String value;
+		
+		CardType(String value) {
+			this.value = value;
+		}
+		public String toString() {
+			return value;
+		}
 	}
 
 	@Override
@@ -37,7 +46,7 @@ public class Card {
 	
 	@Override
 	public String toString() {
-		return name + " " + type.toString();
+		return type.toString() + ": " + name;
 	}
 	
 	@Override

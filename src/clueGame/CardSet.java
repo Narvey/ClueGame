@@ -22,4 +22,11 @@ public class CardSet {
 		this.weapon = weapon;
 		this.room = room;
 	}
+
+	@Override
+	public String toString() {
+		return "[" + person + ", " + weapon + ", " + room + "]";
+	}
+	
+	
 }
