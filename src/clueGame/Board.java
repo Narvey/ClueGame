@@ -45,7 +45,6 @@ public class Board extends JPanel implements MouseListener{
 		// TODO Put something useful here
 	}
 
-
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(numColumns*CELLSIZE, numRows*CELLSIZE);
