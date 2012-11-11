@@ -1,12 +1,12 @@
 package clueGame;
 
 import java.awt.BorderLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -26,12 +26,12 @@ public class ClueGame extends JFrame {
 	private DetectiveNotesDialog detectiveNotes;
 	private GameControlPanel controlPanel;
 	private PlayerDisplay playerPanel;
-	
+
 	public ClueGame() {
 		super();
 		// Adding Board to JFrame
 		gameBoard = new Board();
-		
+
 		try {
 			gameBoard.loadConfigFiles("CR-ClueLegend.txt", "CR-ClueLayout.csv", "weapons.txt", "players.txt");
 		} catch (BadConfigFormatException e) {
@@ -40,9 +40,40 @@ public class ClueGame extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			System.exit(0);
 		}
-		
+
+		// Pick solution cards and deal remaining cards to players.
+		gameBoard.setSolution(pickSolution(gameBoard.getCards()));
+		gameBoard.deal();
+
+		add(new JScrollPane(gameBoard));
+		//setLayout(new BorderLayout());
+		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
+		JScrollPane pane = new JScrollPane(gameBoard);
+		pane.setSize(this.getWidth(), this.getHeight());
+
+		controlPanel = new GameControlPanel();
+		playerPanel = new PlayerDisplay(gameBoard.getHuman());
+
+		//pane.add(gameBoard);
+		getContentPane().add(pane, BorderLayout.CENTER);
+		getContentPane().add(controlPanel, BorderLayout.SOUTH);
+		getContentPane().add(playerPanel, BorderLayout.EAST);
+
+
+		// Adding the file menu to JFrame
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createFileMenu());		
+		gameBoard.addMouseListener(gameBoard);
+
+		// Adding Splash Screen.
+		String message = "You are " + gameBoard.getHuman().getName() + ", press Next Player to begin to play.";
+		String title = "Welcome to Clue";
+		JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private CardSet pickSolution(List<Card> deck) {
 		// Code to pick solution
-		LinkedList<Card> deck = new LinkedList<Card>(gameBoard.getCards()); 
 		Collections.shuffle(deck);
 		Card person = null, weapon = null, room = null;
 		while(person == null || weapon == null || room == null) {
@@ -57,38 +88,9 @@ public class ClueGame extends JFrame {
 				room = card;
 			}
 		}
-		gameBoard.setSolution(new CardSet(person, weapon, room));
-		gameBoard.deal();
-		
-		add(new JScrollPane(gameBoard));
-		//setLayout(new BorderLayout());
-		setSize(gameBoard.getNumColumns()*gameBoard.CELLSIZE+17, gameBoard.getNumRows()*gameBoard.CELLSIZE+17);
-		JScrollPane pane = new JScrollPane(gameBoard);
-		pane.setSize(this.getWidth(), this.getHeight());
-		
-		controlPanel = new GameControlPanel();
-		playerPanel = new PlayerDisplay(gameBoard.getHuman());
-
-		//pane.add(gameBoard);
-		getContentPane().add(pane, BorderLayout.CENTER);
-		getContentPane().add(controlPanel, BorderLayout.SOUTH);
-		getContentPane().add(playerPanel, BorderLayout.EAST);
-		
-		
-		// Adding the file menu to JFrame
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		menuBar.add(createFileMenu());		
-		gameBoard.addMouseListener(gameBoard);
-		
-		// Adding Splash Screen.
-		String message = "You are " + gameBoard.getHuman().getName() + ", press Next Player to begin to play.";
-		String title = "Welcome to Clue";
-		JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+		return new CardSet(person, weapon, room);
 	}
-	
-	
-	
+
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");		
 		class MenuItemListener implements ActionListener {
@@ -109,7 +111,7 @@ public class ClueGame extends JFrame {
 		detectiveNotesMenuItem.addActionListener(new MenuItemListener());
 		menu.add(detectiveNotesMenuItem);
 		menu.add(exitMenuItem);
-		
+
 		return menu;
 	}
 

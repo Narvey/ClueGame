@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.border.TitledBorder;
 public class GameControlPanel extends JPanel {
 	private JButton nextPlayerButton, accusationButton;
 	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, ResponseTextBox;
+	private List<Player> players;
 
 	public GameControlPanel() {
 		nextPlayerButton = new JButton("Next Player");
