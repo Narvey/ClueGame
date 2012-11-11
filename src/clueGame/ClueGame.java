@@ -51,7 +51,7 @@ public class ClueGame extends JFrame {
 		JScrollPane pane = new JScrollPane(gameBoard);
 		pane.setSize(this.getWidth(), this.getHeight());
 
-		controlPanel = new GameControlPanel();
+		controlPanel = new GameControlPanel(gameBoard);
 		playerPanel = new PlayerDisplay(gameBoard.getHuman());
 
 		//pane.add(gameBoard);
