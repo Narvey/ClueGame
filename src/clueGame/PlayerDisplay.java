@@ -16,7 +16,7 @@ public class PlayerDisplay extends JPanel {
 	public PlayerDisplay(Player player) {
 		setLayout(new GridLayout(4,0));
 		cards = player.getCards();
-		add(new JLabel("My cards"));		
+		setBorder(new TitledBorder(new EtchedBorder(), "My cards"));
 		for(Card c : cards) {
 			add(cardPanel(c));
 		}

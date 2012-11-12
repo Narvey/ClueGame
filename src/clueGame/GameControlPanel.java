@@ -22,15 +22,14 @@ public class GameControlPanel extends JPanel {
 	private List<Player> players;
 	private Player humanPlayer;
 	private Player currentPlayer;
-	private boolean gameOver;
-	private int playerIndex;
+	private int whichPlayer;
 	private int currentRoll;
 
 	public GameControlPanel(Board gameBoard) {
-		gameOver = false;
-		playerIndex = 0;
+		whichPlayer = 0;
 		players = gameBoard.getPlayers();
 		humanPlayer = gameBoard.getHuman();
+		currentPlayer = null;
 		
 		nextPlayerButton = new JButton("Next Player");
 		accusationButton = new JButton("Make an accusation");
@@ -50,6 +49,8 @@ public class GameControlPanel extends JPanel {
 		whoseTurnTextBox = new JTextField();
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2,0));
+
+		panel.setBorder(new TitledBorder(new EtchedBorder(), "Player Turn"));
 		panel.add(new JLabel("Whose turn?"));
 		panel.add(whoseTurnTextBox);
 		return panel;
@@ -90,7 +91,7 @@ public class GameControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == nextPlayerButton) {
 				// Get current player
-				currentPlayer = players.get(playerIndex);
+				currentPlayer = players.get(whichPlayer);
 				// Show current player
 				whoseTurnTextBox.setText(currentPlayer.getName());
 				// Get roll for current player
@@ -98,7 +99,7 @@ public class GameControlPanel extends JPanel {
 				// Show current roll.
 				dieTextBox.setText(Integer.toString(currentRoll));
 				// Set index for next player.
-				playerIndex = (playerIndex+1)%players.size();
+				whichPlayer = (whichPlayer+1)%players.size();
 			}
 		}
 		
