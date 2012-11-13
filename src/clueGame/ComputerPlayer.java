@@ -9,7 +9,7 @@ import java.util.Set;
 public class ComputerPlayer extends Player {
 	private char lastRoomVisited;
 	private Set<Card> seenCards = new HashSet<Card>();
-	private CardSet accusationCards;
+	private Solution accusationCards;
 	private boolean foundAccusation;
 
 	public ComputerPlayer() {
@@ -35,7 +35,7 @@ public class ComputerPlayer extends Player {
 	/**
 	 * Can return null if every card of a certain type has been seen
 	 */
-	public CardSet createSuggestion(Card room, List<Card> cards) {
+	public Solution createSuggestion(Card room, List<Card> cards) {
 		
 		List<Card> weapons = new LinkedList<Card>();
 		List<Card> people = new LinkedList<Card>();
@@ -60,14 +60,14 @@ public class ComputerPlayer extends Player {
 		Card weapon = weapons.get(rand.nextInt(weapons.size()));
 		Card person = people.get(rand.nextInt(people.size()));
 		
-		return new CardSet(person, weapon, room);
+		return new Solution(person, weapon, room);
 	}
 
-	public CardSet getAccusationCardsCards() {
+	public Solution getAccusationCardsCards() {
 		return accusationCards;
 	}
 
-	public void setAccusationCards(CardSet accusationCards) {
+	public void setAccusationCards(Solution accusationCards) {
 		this.accusationCards = accusationCards;
 	}
 

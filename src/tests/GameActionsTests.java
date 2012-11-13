@@ -17,7 +17,7 @@ import clueGame.Card;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
-import clueGame.CardSet;
+import clueGame.Solution;
 
 public class GameActionsTests {
 	private static Board board;
@@ -36,7 +36,7 @@ public class GameActionsTests {
 
 	@Test
 	public void testAccusation() {
-		CardSet solution = new CardSet(scarlet, pipe, conservatory);
+		Solution solution = new Solution(scarlet, pipe, conservatory);
 
 		board.setSolution(solution);
 
@@ -214,7 +214,7 @@ public class GameActionsTests {
 		dumbo.markSeen(scarlet);
 		dumbo.markSeen(pipe);
 		for (int i = 0; i < 100; i++) {
-			CardSet suggestion = dumbo.createSuggestion(ballroom, board.getCards());
+			Solution suggestion = dumbo.createSuggestion(ballroom, board.getCards());
 			
 			assertFalse(suggestion.getPerson().equals(scarlet));
 			assertFalse(suggestion.getPerson().equals(mustard));

@@ -24,8 +24,9 @@ public class Board extends JPanel implements MouseListener{
 	private List<Player> players = new ArrayList<Player>(); // contains all players
 	private List<String> weapons = new ArrayList<String>();
 	private HumanPlayer human;
+	private boolean humanturn;///is it the human's turn?
 	private List<Card> cards = new LinkedList<Card>();
-	private CardSet solution;
+	private Solution solution;
 	public static final int CELLSIZE=20;
 	private int numRows=15;
 	private int numColumns=15;//Default values avoid miniscule window.
@@ -44,14 +45,14 @@ public class Board extends JPanel implements MouseListener{
 		for(Player p : players){
 			p.draw(g, this);
 		}
-		highlight(g);//TODO remove this.  It is just for debugging. 
 	}
 	
 	/**
 	 * This function highlights the legal moves.
 	 * It should be called when it is time for the human's turn.
 	 */
-	public void highlight(Graphics g){
+	public void highlight(){
+		Graphics g = getGraphics();
 		int roll=GameControlPanel.getCurrentRoll();
 		targets.clear();
 		path.clear();
@@ -61,11 +62,16 @@ public class Board extends JPanel implements MouseListener{
 		for(BoardCell c : targets){
 			g.fillRoundRect(c.getCol()*CELLSIZE, c.getRow()*CELLSIZE, CELLSIZE, CELLSIZE, 6, 6);
 		}
+		humanturn=true;//if we are highlighting the options, it better be the human's turn.
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Put something useful here
+		if(humanturn){
+			int row = e.getY()%CELLSIZE;
+			int col = e.getX()%CELLSIZE;
+			//TODO actually do something.
+		}else JOptionPane.showMessageDialog(this, "Not your turn", "Problem", JOptionPane.WARNING_MESSAGE);
 	}
 
 	@Override
@@ -228,7 +234,7 @@ public class Board extends JPanel implements MouseListener{
 		return rooms;
 	}
 
-	public CardSet getSolution() {
+	public Solution getSolution() {
 		return solution;
 	}
 
@@ -406,7 +412,7 @@ public class Board extends JPanel implements MouseListener{
 	public List<String> getWeapons() {
 		return weapons;
 	}
-	public void setSolution(CardSet solution) {
+	public void setSolution(Solution solution) {
 		this.solution = solution;
 	}
 	//Don't need to do anything with the following events

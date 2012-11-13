@@ -107,7 +107,7 @@ public class SuggestionDialog extends JDialog {
 				Card person = new Card(personName, CardType.PERSON);
 				Card weapon = new Card(weaponName, CardType.WEAPON);
 				Card room = new Card(roomName, CardType.ROOM);
-				CardSet guessCards = new CardSet(person, weapon, room);
+				Solution guessCards = new Solution(person, weapon, room);
 
 				// Move the suggested player to the room.
 				Player target = findPlayerByName(personName);

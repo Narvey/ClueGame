@@ -72,7 +72,7 @@ public class ClueGame extends JFrame {
 		JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	private CardSet pickSolution(List<Card> deck) {
+	private Solution pickSolution(List<Card> deck) {
 		// Code to pick solution
 		Collections.shuffle(deck);
 		Card person = null, weapon = null, room = null;
@@ -89,7 +89,7 @@ public class ClueGame extends JFrame {
 			}
 		}
 		System.out.println(person.getName() + " " + weapon.getName() + " " + room.getName());
-		return new CardSet(person, weapon, room);
+		return new Solution(person, weapon, room);
 	}
 
 	private JMenu createFileMenu() {
