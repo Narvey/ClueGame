@@ -36,7 +36,8 @@ public class ComputerPlayer extends Player {
 	 * Can return null if every card of a certain type has been seen
 	 */
 	public CardSet createSuggestion(Card room, List<Card> cards) {
-		
+
+		System.out.println(cards.size());
 		List<Card> weapons = new LinkedList<Card>();
 		List<Card> people = new LinkedList<Card>();
 		

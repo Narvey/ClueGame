@@ -6,6 +6,7 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -185,7 +186,7 @@ public class GameControlPanel extends JPanel {
 		private void makeMove() {
 			
 			if(!((ComputerPlayer) currentPlayer).isFoundAccusation()) {
-				List<Card> cards = gameBoard.getCards();
+				List<Card> cards = new LinkedList<Card>(gameBoard.getCards());
 				// Pick a location from the calculated list.
 				BoardCell cell = ((ComputerPlayer) currentPlayer).pickLocation(gameBoard.getTargets(currentPlayer.getCellIndex(), currentRoll));
 				// moves to that location.
@@ -195,6 +196,7 @@ public class GameControlPanel extends JPanel {
 				// if location is room
 				if(cell.isRoom()) {
 					char key = cell.getInitial();
+					((ComputerPlayer) currentPlayer).setLastRoomVisited(key);
 					String name = rooms.get(key);
 					Card room = new Card(name, CardType.ROOM);
 					// Get suggestionCards
@@ -206,6 +208,7 @@ public class GameControlPanel extends JPanel {
 					guessTextBox.setText(suggestionCards.toString());
 					if(disproveCard != null) {
 						responseTextBox.setText(disproveCard.getName());
+						((ComputerPlayer) currentPlayer).markSeen(disproveCard);
 					}
 					else {
 						responseTextBox.setText("None");
@@ -223,7 +226,7 @@ public class GameControlPanel extends JPanel {
 				// check if accusation is right.
 				if (gameBoard.checkAccusation(person, weapon, room)) {
 					gameOver = true;
-					JOptionPane.showMessageDialog(null, currentPlayer.getName() + "'s accusation is correct, therefore winning the game.");
+					JOptionPane.showMessageDialog(null, currentPlayer.getName() + "'s has won. The answer is " + accusationCards.toString() + ".");
 				}
 				else {
 
