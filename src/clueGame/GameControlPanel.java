@@ -19,11 +19,11 @@ import javax.swing.border.TitledBorder;
 public class GameControlPanel extends JPanel {
 	private JButton nextPlayerButton, accusationButton;
 	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, ResponseTextBox;
-	private List<Player> players;
+	private static List<Player> players;
 	private Player humanPlayer;
 	private Player currentPlayer;
-	private int whichPlayer;
-	private int currentRoll;
+	private static int whichPlayer;
+	private static int currentRoll;
 
 	public GameControlPanel(Board gameBoard) {
 		whichPlayer = 0;
@@ -100,8 +100,25 @@ public class GameControlPanel extends JPanel {
 				dieTextBox.setText(Integer.toString(currentRoll));
 				// Set index for next player.
 				whichPlayer = (whichPlayer+1)%players.size();
+				// redraw board, etc.
+				getParent().repaint();
 			}
 		}
 		
 	}
+
+	/**
+	 * @return the current player
+	 */
+	public static Player getCurrentPlayer() {
+		return players.get(whichPlayer);
+	}
+
+	/**
+	 * @return the currentRoll
+	 */
+	public static int getCurrentRoll() {
+		return currentRoll;
+	}
+
 }

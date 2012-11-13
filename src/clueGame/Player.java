@@ -30,6 +30,9 @@ public class Player {
 		g.fillOval(start.getCol()*Board.CELLSIZE, start.getRow()*Board.CELLSIZE, Board.CELLSIZE, Board.CELLSIZE);
 	}
 
+	/**
+	 * @return the index of the current location of the player??
+	 */
 	public int getCellIndex() {
 		return cellIndex;
 	}
