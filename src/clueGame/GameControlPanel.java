@@ -111,8 +111,10 @@ public class GameControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == nextPlayerButton && gameOver == false) {
-				// Set reset submit accusation.
+				// Reset submit accusation.
 				submitAccusation = false;
+				// Reset accusation dialog
+				accusationDialog = null;
 				// Get current player
 				currentPlayer = players.get(whichPlayer);
 				// Show current player
