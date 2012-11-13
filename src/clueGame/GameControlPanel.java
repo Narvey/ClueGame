@@ -125,12 +125,15 @@ public class GameControlPanel extends JPanel {
 				getParent().repaint();
 			}
 			else if(e.getSource() == accusationButton && gameOver == false) {
-				if(currentPlayer == null || currentPlayer.getName().compareTo(humanPlayer.getName()) != 0) {
-					JOptionPane.showMessageDialog(null, "It's not your turn.");
-				}
-				else if (accusationDialog == null) {
+				
+				if (accusationDialog == null) {
 					accusationDialog = new AccusationDialog(gameBoard, controlPanel);
 					accusationDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+				}
+				
+				if(currentPlayer == null || (currentPlayer.getName()).compareTo(humanPlayer.getName()) != 0) {
+					
+					JOptionPane.showMessageDialog(null, "It's not your turn.");
 				}
 				else {
 					accusationDialog.setVisible(true);
