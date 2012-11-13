@@ -42,7 +42,7 @@ public class ClueGame extends JFrame {
 		}
 
 		// Pick solution cards and deal remaining cards to players.
-		gameBoard.setSolution(pickSolution(gameBoard.getCards()));
+		gameBoard.setSolution(pickSolution());
 		gameBoard.deal();
 
 		add(new JScrollPane(gameBoard));
@@ -72,8 +72,10 @@ public class ClueGame extends JFrame {
 		JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	private Solution pickSolution(List<Card> deck) {
+	private Solution pickSolution() {
+		
 		// Code to pick solution
+		List<Card> deck = new LinkedList<>(gameBoard.getCards());
 		Collections.shuffle(deck);
 		Card person = null, weapon = null, room = null;
 		while(person == null || weapon == null || room == null) {

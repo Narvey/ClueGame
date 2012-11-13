@@ -52,6 +52,7 @@ public class ComputerPlayer extends Player {
 				}
 			}
 		}
+
 		
 		if (weapons.size() == 0 || people.size() == 0) return null;
 		

@@ -129,6 +129,9 @@ public class GameControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == nextPlayerButton && gameOver == false) {
+				// Reset Dialog
+				responseTextBox.setText("");
+				guessTextBox.setText("");
 				// Reset submit accusation.
 				submitAccusation = false;
 				// Reset accusation dialog
