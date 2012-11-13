@@ -88,6 +88,7 @@ public class ClueGame extends JFrame {
 				room = card;
 			}
 		}
+		System.out.println(person.getName() + " " + weapon.getName() + " " + room.getName());
 		return new CardSet(person, weapon, room);
 	}
 

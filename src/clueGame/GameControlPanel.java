@@ -10,9 +10,11 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -24,12 +26,20 @@ public class GameControlPanel extends JPanel {
 	private Player currentPlayer;
 	private int whichPlayer;
 	private int currentRoll;
+	private boolean gameOver, submitAccusation;
+	private AccusationDialog accusationDialog;
+	private Board gameBoard;
+	private GameControlPanel controlPanel;
 
 	public GameControlPanel(Board gameBoard) {
+		this.gameBoard = gameBoard;
+		gameOver = false;
+		submitAccusation = false;
 		whichPlayer = 0;
 		players = gameBoard.getPlayers();
 		humanPlayer = gameBoard.getHuman();
 		currentPlayer = null;
+		controlPanel = this;
 		
 		nextPlayerButton = new JButton("Next Player");
 		accusationButton = new JButton("Make an accusation");
@@ -41,8 +51,17 @@ public class GameControlPanel extends JPanel {
 		add(guessPanel());
 		add(responsePanel());
 		
-		nextPlayerButton.addActionListener(new NextPlayerListener());
+		nextPlayerButton.addActionListener(new ButtonsListener());
+		accusationButton.addActionListener(new ButtonsListener());
 		
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	public void setSubmitAccusation(boolean submitAccusation) {
+		this.submitAccusation = submitAccusation;
 	}
 
 	private JPanel whoseTurnPanel() {
@@ -84,12 +103,13 @@ public class GameControlPanel extends JPanel {
 		panel.add(ResponseTextBox);
 		return panel;
 	}
-	
-	private class NextPlayerListener implements ActionListener {
+
+	private class ButtonsListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == nextPlayerButton) {
+			
+			if(e.getSource() == nextPlayerButton && gameOver == false) {
 				// Get current player
 				currentPlayer = players.get(whichPlayer);
 				// Show current player
@@ -101,7 +121,23 @@ public class GameControlPanel extends JPanel {
 				// Set index for next player.
 				whichPlayer = (whichPlayer+1)%players.size();
 			}
+			else if(e.getSource() == accusationButton && gameOver == false) {
+				if(currentPlayer == null || currentPlayer.getName().compareTo(humanPlayer.getName()) != 0) {
+					JOptionPane.showMessageDialog(null, "It's not your turn.");
+				}
+				else if (accusationDialog == null) {
+					accusationDialog = new AccusationDialog(gameBoard, controlPanel);
+					accusationDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+				}
+				else {
+					accusationDialog.setVisible(true);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Game over!");
+			}
 		}
 		
 	}
+	
 }
