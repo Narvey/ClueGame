@@ -110,7 +110,9 @@ public class GameControlPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			if(e.getSource() == nextPlayerButton && gameOver == false) {
+			if (e.getSource() == nextPlayerButton && gameOver == false) {
+				// Set reset submit accusation.
+				submitAccusation = false;
 				// Get current player
 				currentPlayer = players.get(whichPlayer);
 				// Show current player
@@ -124,7 +126,7 @@ public class GameControlPanel extends JPanel {
 				// redraw board, etc.
 				getParent().repaint();
 			}
-			else if(e.getSource() == accusationButton && gameOver == false) {
+			else if(e.getSource() == accusationButton && gameOver == false && submitAccusation == false) {
 				
 				if (accusationDialog == null) {
 					accusationDialog = new AccusationDialog(gameBoard, controlPanel);
@@ -138,6 +140,9 @@ public class GameControlPanel extends JPanel {
 				else {
 					accusationDialog.setVisible(true);
 				}
+			}
+			else if(e.getSource() == accusationButton && gameOver == false && submitAccusation == true) {
+				JOptionPane.showMessageDialog(null, "It's not your turn.");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Game over!");
