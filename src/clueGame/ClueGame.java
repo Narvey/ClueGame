@@ -47,6 +47,13 @@ public class ClueGame extends JFrame {
 		// Pick solution cards and deal remaining cards to players.
 		gameBoard.setSolution(pickSolution());
 		gameBoard.deal();
+		String messages = "";
+		for(Player p: gameBoard.getPlayers()){
+			for(Card c : p.getCards()) messages += c;
+			messages += '\n';
+		}
+		JOptionPane.showMessageDialog(this, messages);
+
 
 		add(new JScrollPane(gameBoard));
 		//setLayout(new BorderLayout());
@@ -76,21 +83,24 @@ public class ClueGame extends JFrame {
 	}
 
 	private Solution pickSolution() {
-		
+
 		// Code to pick solution
-		LinkedList<Card> deck = new LinkedList<Card>(gameBoard.getCards());
+		List<Card> deck = gameBoard.getCards();
 		Collections.shuffle(deck);
 		Card person = null, weapon = null, room = null;
 		while(person == null || weapon == null || room == null) {
-			Card card = deck.remove(0);
-			if(card.getType() == CardType.PERSON && person == null) {
-				person = card;
-			}
-			else if(card.getType() == CardType.WEAPON && weapon == null) {
-				weapon = card;
-			}
-			else if(card.getType() == CardType.ROOM && room == null) {
-				room = card;
+			switch(deck.get(0).getType()){
+			case PERSON:
+				if(person == null) person = deck.remove(0);
+				break;
+			case WEAPON:
+				if(weapon == null)weapon = deck.remove(0);
+				break;
+			case ROOM:
+				if(room == null)room = deck.remove(0);
+				break;
+			default:
+				System.out.println("PROBLEM!!!!!!");
 			}
 		}
 		//////////// Print out the solution cards.

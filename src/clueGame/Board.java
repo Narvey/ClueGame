@@ -46,7 +46,7 @@ public class Board extends JPanel implements MouseListener{
 			p.draw(g, this);
 		}
 	}
-	
+
 	/**
 	 * This function highlights the legal moves.
 	 * It should be called when it is time for the human's turn.
@@ -64,7 +64,7 @@ public class Board extends JPanel implements MouseListener{
 		}
 		humanturn=true;//if we are highlighting the options, it better be the human's turn.
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(humanturn){
@@ -105,17 +105,14 @@ public class Board extends JPanel implements MouseListener{
 
 		List<Card> deck = new LinkedList<Card>(cards); // duplicate the cards list for dealing
 		Collections.shuffle(deck);
-		
+
 		int i = 0;
 		while (deck.size() > 0) {
 			Card card = deck.remove(0); // the deck is shuffled, so just remove the first card
-			String cardName = card.getName();
-			if(cardName.compareTo(solution.getPerson().getName()) != 0 &&
-					cardName.compareTo(solution.getRoom().getName()) != 0 && 
-					cardName.compareTo(solution.getWeapon().getName()) != 0) {
-				players.get(i).giveCard(card);
-				i = (i + 1) % players.size();
-			}
+			//String cardName = card.getName();
+			players.get(i).giveCard(card);
+			i = (i + 1) % players.size();
+
 		}
 	}
 
@@ -350,7 +347,7 @@ public class Board extends JPanel implements MouseListener{
 			String room = stringArr[1].trim();
 			char c = character.charAt(0);			
 			if(room.compareTo("Walkway") != 0 && room.compareTo("Closet") != 0)
-			rooms.put(c, room);
+				rooms.put(c, room);
 			if(stringArr[2].trim().equals("X"))continue;
 			//X means don't draw the name.
 			try{
