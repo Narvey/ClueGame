@@ -21,15 +21,16 @@ import javax.swing.border.TitledBorder;
 public class GameControlPanel extends JPanel {
 	private JButton nextPlayerButton, accusationButton;
 	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, ResponseTextBox;
-	private List<Player> players;
+	private static List<Player> players;
 	private Player humanPlayer;
 	private Player currentPlayer;
-	private int whichPlayer;
-	private int currentRoll;
+
 	private boolean gameOver, submitAccusation;
 	private AccusationDialog accusationDialog;
 	private Board gameBoard;
 	private GameControlPanel controlPanel;
+	private static int whichPlayer;
+	private static int currentRoll;
 
 	public GameControlPanel(Board gameBoard) {
 		this.gameBoard = gameBoard;
@@ -120,6 +121,8 @@ public class GameControlPanel extends JPanel {
 				dieTextBox.setText(Integer.toString(currentRoll));
 				// Set index for next player.
 				whichPlayer = (whichPlayer+1)%players.size();
+				// redraw board, etc.
+				getParent().repaint();
 			}
 			else if(e.getSource() == accusationButton && gameOver == false) {
 				if(currentPlayer == null || currentPlayer.getName().compareTo(humanPlayer.getName()) != 0) {
@@ -139,5 +142,20 @@ public class GameControlPanel extends JPanel {
 		}
 		
 	}
-	
+
+
+	/**
+	 * @return the current player
+	 */
+	public static Player getCurrentPlayer() {
+		return players.get(whichPlayer);
+	}
+
+	/**
+	 * @return the currentRoll
+	 */
+	public static int getCurrentRoll() {
+		return currentRoll;
+	}
+
 }

@@ -44,7 +44,25 @@ public class Board extends JPanel implements MouseListener{
 		for(Player p : players){
 			p.draw(g, this);
 		}
+		highlight(g);//TODO remove this.  It is just for debugging. 
 	}
+	
+	/**
+	 * This function highlights the legal moves.
+	 * It should be called when it is time for the human's turn.
+	 */
+	public void highlight(Graphics g){
+		int roll=GameControlPanel.getCurrentRoll();
+		targets.clear();
+		path.clear();
+		path.add(human.getCellIndex());
+		calcTargets(human.getCellIndex(), roll);
+		g.setColor(new Color(0xAA0055FF, true));
+		for(BoardCell c : targets){
+			g.fillRoundRect(c.getCol()*CELLSIZE, c.getRow()*CELLSIZE, CELLSIZE, CELLSIZE, 6, 6);
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Put something useful here
@@ -215,7 +233,7 @@ public class Board extends JPanel implements MouseListener{
 	}
 
 	public Set<BoardCell> getTargets(int i, int steps) {
-		targets = new HashSet<BoardCell>();
+		targets.clear();
 		path.clear();
 		path.add(i);
 		calcTargets(i, steps);
