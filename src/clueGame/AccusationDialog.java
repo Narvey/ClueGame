@@ -35,9 +35,9 @@ public class AccusationDialog extends JDialog {
 
 		setTitle("Make an Accusation.");
 		setLayout(new GridLayout(4, 0));
-		setSize(300, 300);
-		add(personGuessPanel());
+		setSize(300, 200);
 		add(roomGuessPanel());
+		add(personGuessPanel());
 		add(weaponGuessPanel());
 		add(buttonPanel());
 

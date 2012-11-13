@@ -6,6 +6,7 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -23,14 +24,16 @@ public class GameControlPanel extends JPanel {
 	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, ResponseTextBox;
 	private static List<Player> players;
 	private Player humanPlayer;
-	private Player currentPlayer;
+	private static Player currentPlayer;
 
 	private boolean gameOver, submitAccusation;
 	private AccusationDialog accusationDialog;
+	private SuggestionDialog suggestionDialog;
 	private Board gameBoard;
 	private GameControlPanel controlPanel;
 	private static int whichPlayer;
 	private static int currentRoll;
+	private Map<Character, String> rooms;
 
 	public GameControlPanel(Board gameBoard) {
 		this.gameBoard = gameBoard;
@@ -39,6 +42,7 @@ public class GameControlPanel extends JPanel {
 		whichPlayer = 0;
 		players = gameBoard.getPlayers();
 		humanPlayer = gameBoard.getHuman();
+		rooms = gameBoard.getRooms();
 		currentPlayer = null;
 		controlPanel = this;
 		
@@ -55,6 +59,14 @@ public class GameControlPanel extends JPanel {
 		nextPlayerButton.addActionListener(new ButtonsListener());
 		accusationButton.addActionListener(new ButtonsListener());
 		
+	}
+
+	public JTextField getGuessTextBox() {
+		return guessTextBox;
+	}
+
+	public JTextField getResponseTextBox() {
+		return ResponseTextBox;
 	}
 
 	public void setGameOver(boolean gameOver) {
@@ -127,6 +139,14 @@ public class GameControlPanel extends JPanel {
 				whichPlayer = (whichPlayer+1)%players.size();
 				// redraw board, etc.
 				getParent().repaint();
+				// check if current player in a room.
+				int currentPlayerLocation = currentPlayer.getCellIndex();
+				BoardCell currentPlayerCell = gameBoard.getCellAt(currentPlayerLocation);
+				if(currentPlayer.equals(humanPlayer) && currentPlayerCell.isRoom()) {
+					suggestionDialog = new SuggestionDialog(gameBoard, controlPanel);
+					suggestionDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+					suggestionDialog.setVisible(true);
+				}
 			}
 			else if(e.getSource() == accusationButton && gameOver == false && submitAccusation == false) {
 				
@@ -158,7 +178,7 @@ public class GameControlPanel extends JPanel {
 	 * @return the current player
 	 */
 	public static Player getCurrentPlayer() {
-		return players.get(whichPlayer);
+		return currentPlayer;
 	}
 
 	/**
@@ -167,5 +187,6 @@ public class GameControlPanel extends JPanel {
 	public static int getCurrentRoll() {
 		return currentRoll;
 	}
+	
 
 }
