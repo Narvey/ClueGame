@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -19,9 +20,13 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import org.junit.runner.Computer;
+
+import clueGame.Card.CardType;
+
 public class GameControlPanel extends JPanel {
 	private JButton nextPlayerButton, accusationButton;
-	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, ResponseTextBox;
+	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, responseTextBox;
 	private static List<Player> players;
 	private Player humanPlayer;
 	private static Player currentPlayer;
@@ -66,7 +71,7 @@ public class GameControlPanel extends JPanel {
 	}
 
 	public JTextField getResponseTextBox() {
-		return ResponseTextBox;
+		return responseTextBox;
 	}
 
 	public void setGameOver(boolean gameOver) {
@@ -108,12 +113,12 @@ public class GameControlPanel extends JPanel {
 	}	
 	
 	private JPanel responsePanel() {
-		ResponseTextBox = new JTextField();
+		responseTextBox = new JTextField();
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2,0));
 		panel.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
 		panel.add(new JLabel("Response"));
-		panel.add(ResponseTextBox);
+		panel.add(responseTextBox);
 		return panel;
 	}
 
@@ -135,11 +140,14 @@ public class GameControlPanel extends JPanel {
 				currentRoll = (new Random()).nextInt(6)+1;
 				// Show current roll.
 				dieTextBox.setText(Integer.toString(currentRoll));
-				// Set index for next player.
-				whichPlayer = (whichPlayer+1)%players.size();
+				// if computer player then makeMove;
+				if(!currentPlayer.equals(humanPlayer)) {
+					makeMove();
+				}
+				
 				// redraw board, etc.
 				getParent().repaint();
-				// check if current player in a room.
+				// check if human player in a room.
 				int currentPlayerLocation = currentPlayer.getCellIndex();
 				BoardCell currentPlayerCell = gameBoard.getCellAt(currentPlayerLocation);
 				if(currentPlayer.equals(humanPlayer) && currentPlayerCell.isRoom()) {
@@ -147,6 +155,9 @@ public class GameControlPanel extends JPanel {
 					suggestionDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 					suggestionDialog.setVisible(true);
 				}
+
+				// Set index for next player.
+				whichPlayer = (whichPlayer+1)%players.size();
 			}
 			else if(e.getSource() == accusationButton && gameOver == false && submitAccusation == false) {
 				
@@ -168,6 +179,36 @@ public class GameControlPanel extends JPanel {
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Game over!");
+			}
+		}
+		
+		private void makeMove() {
+			List<Card> cards = gameBoard.getCards();
+			// Pick a location from the calculated list.
+			BoardCell cell = ((ComputerPlayer) currentPlayer).pickLocation(gameBoard.getTargets(currentPlayer.getCellIndex(), currentRoll));
+			// moves to that location.
+			currentPlayer.setCellIndex(cell.getIndex());
+			// causes the board to repaint.
+			getParent().repaint();
+			// if location is room
+			if(cell.isRoom()) {
+				char key = cell.getInitial();
+				String name = rooms.get(key);
+				Card room = new Card(name, CardType.ROOM);
+				CardSet suggestionCards = ((ComputerPlayer) currentPlayer).createSuggestion(room, cards);
+				Card person = suggestionCards.getPerson();
+				Card weapon = suggestionCards.getWeapon();
+				
+				Card disproveCard = gameBoard.disproveSuggestion(currentPlayer, person, weapon, room);
+				guessTextBox.setText(suggestionCards.toString());
+				if(disproveCard != null) {
+					responseTextBox.setText(disproveCard.getName());
+				}
+				else {
+					responseTextBox.setText("None");
+					((ComputerPlayer) currentPlayer).setFoundSuggestion(true);
+					((ComputerPlayer) currentPlayer).setSuggestionCards(suggestionCards);
+				}
 			}
 		}
 		

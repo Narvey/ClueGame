@@ -9,8 +9,11 @@ import java.util.Set;
 public class ComputerPlayer extends Player {
 	private char lastRoomVisited;
 	private Set<Card> seenCards = new HashSet<Card>();
+	private CardSet suggestionCards;
+	private boolean foundSuggestion;
 
 	public ComputerPlayer() {
+		foundSuggestion = false;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,6 +36,11 @@ public class ComputerPlayer extends Player {
 	 * Can return null if every card of a certain type has been seen
 	 */
 	public CardSet createSuggestion(Card room, List<Card> cards) {
+		
+		if(foundSuggestion) {
+			return suggestionCards;
+		}
+		
 		List<Card> weapons = new LinkedList<Card>();
 		List<Card> people = new LinkedList<Card>();
 		
@@ -57,6 +65,14 @@ public class ComputerPlayer extends Player {
 		Card person = people.get(rand.nextInt(people.size()));
 		
 		return new CardSet(person, weapon, room);
+	}
+
+	public void setSuggestionCards(CardSet suggestionCards) {
+		this.suggestionCards = suggestionCards;
+	}
+
+	public void setFoundSuggestion(boolean foundSuggestion) {
+		this.foundSuggestion = foundSuggestion;
 	}
 
 	public void markSeen(Card seen) {
