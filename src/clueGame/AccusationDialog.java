@@ -108,9 +108,9 @@ public class AccusationDialog extends JDialog {
 				if(gameBoard.checkAccusation(person, weapon, room)) {
 					controlPanel.setGameOver(true);
 					JOptionPane.showMessageDialog(null, "You win!");
+					controlPanel.newGamePrompt();
 				}
 				else {
-					controlPanel.setGameOver(false);
 					JOptionPane.showMessageDialog(null, "Sorry, not correct.");
 				}
 				

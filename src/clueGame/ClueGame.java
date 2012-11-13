@@ -22,13 +22,16 @@ import clueGame.Card.CardType;
 public class ClueGame extends JFrame {
 	private JMenuItem exitMenuItem = new JMenuItem("Exit");
 	private JMenuItem detectiveNotesMenuItem = new JMenuItem("Show Detective Notes");
+	private JMenuItem newGameMenuItem = new JMenuItem("New Game");
 	private Board gameBoard;
 	private DetectiveNotesDialog detectiveNotes;
 	private GameControlPanel controlPanel;
 	private PlayerDisplay playerPanel;
+	private ClueGame clueGame;
 
 	public ClueGame() {
 		super();
+		clueGame = this;
 		// Adding Board to JFrame
 		gameBoard = new Board();
 
@@ -51,7 +54,7 @@ public class ClueGame extends JFrame {
 		JScrollPane pane = new JScrollPane(gameBoard);
 		pane.setSize(this.getWidth(), this.getHeight());
 
-		controlPanel = new GameControlPanel(gameBoard);
+		controlPanel = new GameControlPanel(gameBoard, this);
 		playerPanel = new PlayerDisplay(gameBoard.getHuman());
 
 		//pane.add(gameBoard);
@@ -109,10 +112,15 @@ public class ClueGame extends JFrame {
 					}
 					detectiveNotes.setVisible(true);
 				}
+				else if (e.getSource() == newGameMenuItem) {
+					controlPanel.newGamePrompt();
+				}
 			}
 		}
 		exitMenuItem.addActionListener(new MenuItemListener());
 		detectiveNotesMenuItem.addActionListener(new MenuItemListener());
+		newGameMenuItem.addActionListener(new MenuItemListener());
+		menu.add(newGameMenuItem);
 		menu.add(detectiveNotesMenuItem);
 		menu.add(exitMenuItem);
 

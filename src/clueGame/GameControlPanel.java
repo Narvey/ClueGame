@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,8 +41,10 @@ public class GameControlPanel extends JPanel {
 	private static int whichPlayer;
 	private static int currentRoll;
 	private Map<Character, String> rooms;
+	private ClueGame clueGame;
 
-	public GameControlPanel(Board gameBoard) {
+	public GameControlPanel(Board gameBoard, ClueGame clueGame) {
+		this.clueGame = clueGame;
 		this.gameBoard = gameBoard;
 		gameOver = false;
 		submitAccusation = false;
@@ -182,65 +185,80 @@ public class GameControlPanel extends JPanel {
 				JOptionPane.showMessageDialog(null, "It's not your turn.");
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "Game over!");
+				newGamePrompt();
 			}
 		}
-
-		private void makeMove() {
-			
-			if(!((ComputerPlayer) currentPlayer).isFoundAccusation()) {
-				List<Card> cards = new LinkedList<Card>(gameBoard.getCards());
-				// Pick a location from the calculated list.
-				BoardCell cell = ((ComputerPlayer) currentPlayer).pickLocation(gameBoard.getTargets(currentPlayer.getCellIndex(), currentRoll));
-				// moves to that location.
-				currentPlayer.setCellIndex(cell.getIndex());
-				// causes the board to repaint.
-				getParent().repaint();
-				// if location is room
-				if(cell.isRoom()) {
-					char key = cell.getInitial();
-					((ComputerPlayer) currentPlayer).setLastRoomVisited(key);
-					String name = rooms.get(key);
-					Card room = new Card(name, CardType.ROOM);
-					// Get suggestionCards
-					Solution suggestionCards = ((ComputerPlayer) currentPlayer).createSuggestion(room, cards);
-					Card person = suggestionCards.getPerson();
-					Card weapon = suggestionCards.getWeapon();
-
-					Card disproveCard = gameBoard.disproveSuggestion(currentPlayer, person, weapon, room);
-					guessTextBox.setText(suggestionCards.toString());
-					if(disproveCard != null) {
-						responseTextBox.setText(disproveCard.getName());
-						((ComputerPlayer) currentPlayer).markSeen(disproveCard);
-					}
-					else {
-						responseTextBox.setText("None");
-						((ComputerPlayer) currentPlayer).setFoundAccusation(true);
-						((ComputerPlayer) currentPlayer).setAccusationCards(suggestionCards);
-					}
-				}
-			}
-			else {
-				// Make Accusation.
-				Solution accusationCards = ((ComputerPlayer) currentPlayer).getAccusationCardsCards();
-				Card person = accusationCards.getPerson();
-				Card weapon = accusationCards.getWeapon();
-				Card room = accusationCards.getRoom();
-				// check if accusation is right.
-				if (gameBoard.checkAccusation(person, weapon, room)) {
-					gameOver = true;
-					JOptionPane.showMessageDialog(null, currentPlayer.getName() + "'s has won. The answer is " + accusationCards.toString() + ".");
-				}
-				else {
-
-					JOptionPane.showMessageDialog(null, currentPlayer.getName() + "'s accusation is incorrect.");
-					((ComputerPlayer) currentPlayer).setFoundAccusation(false);
-				}
-			}
-		}
-
 	}
 
+	private void makeMove() {
+
+		if(!((ComputerPlayer) currentPlayer).isFoundAccusation()) {
+			List<Card> cards = new LinkedList<Card>(gameBoard.getCards());
+			// Pick a location from the calculated list.
+			BoardCell cell = ((ComputerPlayer) currentPlayer).pickLocation(gameBoard.getTargets(currentPlayer.getCellIndex(), currentRoll));
+			// moves to that location.
+			currentPlayer.setCellIndex(cell.getIndex());
+			// causes the board to repaint.
+			getParent().repaint();
+			// if location is room
+			if(cell.isRoom()) {
+				char key = cell.getInitial();
+				((ComputerPlayer) currentPlayer).setLastRoomVisited(key);
+				String name = rooms.get(key);
+				Card room = new Card(name, CardType.ROOM);
+				// Get suggestionCards
+				Solution suggestionCards = ((ComputerPlayer) currentPlayer).createSuggestion(room, cards);
+				Card person = suggestionCards.getPerson();
+				Card weapon = suggestionCards.getWeapon();
+
+				Card disproveCard = gameBoard.disproveSuggestion(currentPlayer, person, weapon, room);
+				guessTextBox.setText(suggestionCards.toString());
+				if(disproveCard != null) {
+					responseTextBox.setText(disproveCard.getName());
+					((ComputerPlayer) currentPlayer).markSeen(disproveCard);
+				}
+				else {
+					responseTextBox.setText("None");
+					((ComputerPlayer) currentPlayer).setFoundAccusation(true);
+					((ComputerPlayer) currentPlayer).setAccusationCards(suggestionCards);
+				}
+			}
+		}
+		else {
+			// Make Accusation.
+			Solution accusationCards = ((ComputerPlayer) currentPlayer).getAccusationCardsCards();
+			Card person = accusationCards.getPerson();
+			Card weapon = accusationCards.getWeapon();
+			Card room = accusationCards.getRoom();
+			// check if accusation is right.
+			if (gameBoard.checkAccusation(person, weapon, room)) {
+				gameOver = true;
+				JOptionPane.showMessageDialog(null, currentPlayer.getName() + "'s has won. The answer is " + accusationCards.toString() + ".");
+				newGamePrompt();
+			}
+			else {
+
+				JOptionPane.showMessageDialog(null, currentPlayer.getName() + "'s accusation is incorrect.");
+				((ComputerPlayer) currentPlayer).setFoundAccusation(false);
+			}
+		}
+	}
+
+
+
+	public void newGamePrompt() {
+		int newGame = JOptionPane.showConfirmDialog(null, "Start a new game?");
+		if (newGame == JOptionPane.YES_OPTION) {
+			clueGame.setVisible(false);
+			clueGame = new ClueGame();
+			clueGame.setTitle("The game of Clue-Lah!");
+			clueGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			clueGame.setVisible(true);
+		}
+		else if (newGame == JOptionPane.NO_OPTION){
+			System.exit(0);
+		}
+	}
 
 	/**
 	 * @return the current player
