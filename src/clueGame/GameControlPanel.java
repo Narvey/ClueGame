@@ -153,7 +153,7 @@ public class GameControlPanel extends JPanel {
 				}else gameBoard.highlight();
 
 				// redraw board, etc.
-				getParent().repaint();
+				// getParent().repaint();
 				// check if human player in a room.
 				int currentPlayerLocation = currentPlayer.getCellIndex();
 				BoardCell currentPlayerCell = gameBoard.getCellAt(currentPlayerLocation);

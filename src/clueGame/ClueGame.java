@@ -113,7 +113,11 @@ public class ClueGame extends JFrame {
 					detectiveNotes.setVisible(true);
 				}
 				else if (e.getSource() == newGameMenuItem) {
-					controlPanel.newGamePrompt();
+					clueGame.setVisible(false);
+					clueGame = new ClueGame();
+					clueGame.setTitle("The game of Clue-Lah!");
+					clueGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					clueGame.setVisible(true);
 				}
 			}
 		}
