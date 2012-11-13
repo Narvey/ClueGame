@@ -78,7 +78,7 @@ public class ClueGame extends JFrame {
 	private Solution pickSolution() {
 		
 		// Code to pick solution
-		List<Card> deck = new LinkedList<>(gameBoard.getCards());
+		LinkedList<Card> deck = new LinkedList<Card>(gameBoard.getCards());
 		Collections.shuffle(deck);
 		Card person = null, weapon = null, room = null;
 		while(person == null || weapon == null || room == null) {
