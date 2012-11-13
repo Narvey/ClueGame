@@ -90,7 +90,8 @@ public class ClueGame extends JFrame {
 				room = card;
 			}
 		}
-		System.out.println(person.getName() + " " + weapon.getName() + " " + room.getName());
+		//////////// Print out the solution cards.
+		System.out.println("Solution: " + person.getName() + ", " + room.getName() + ", " + weapon.getName());
 		return new Solution(person, weapon, room);
 	}
 

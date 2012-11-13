@@ -234,6 +234,7 @@ public class GameControlPanel extends JPanel {
 				else {
 
 					JOptionPane.showMessageDialog(null, currentPlayer.getName() + "'s accusation is incorrect.");
+					((ComputerPlayer) currentPlayer).setFoundAccusation(false);
 				}
 			}
 		}
