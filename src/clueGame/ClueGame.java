@@ -47,12 +47,7 @@ public class ClueGame extends JFrame {
 		// Pick solution cards and deal remaining cards to players.
 		gameBoard.setSolution(pickSolution());
 		gameBoard.deal();
-		String messages = "";
-		for(Player p: gameBoard.getPlayers()){
-			for(Card c : p.getCards()) messages += c;
-			messages += '\n';
-		}
-		JOptionPane.showMessageDialog(this, messages);
+		
 
 
 		add(new JScrollPane(gameBoard));
@@ -88,22 +83,28 @@ public class ClueGame extends JFrame {
 		List<Card> deck = gameBoard.getCards();
 		Collections.shuffle(deck);
 		Card person = null, weapon = null, room = null;
-		while(person == null || weapon == null || room == null) {
-			switch(deck.get(0).getType()){
+		for(Card c : deck){
+			switch(c.getType()){
 			case PERSON:
-				if(person == null) person = deck.remove(0);
+				person = c;
 				break;
 			case WEAPON:
-				if(weapon == null)weapon = deck.remove(0);
+				weapon = c;
 				break;
 			case ROOM:
-				if(room == null)room = deck.remove(0);
+				room = c;
 				break;
 			default:
 				System.out.println("PROBLEM!!!!!!");
 			}
+			if(person !=null&&weapon!=null&&room!=null){
+				deck.remove(person);
+				deck.remove(room);
+				deck.remove(weapon);
+				break;
+			}
 		}
-		//////////// Print out the solution cards.
+		//////////// Print out the solution cards. (DEBUG)
 		System.out.println("Solution: " + person.getName() + ", " + room.getName() + ", " + weapon.getName());
 		return new Solution(person, weapon, room);
 	}

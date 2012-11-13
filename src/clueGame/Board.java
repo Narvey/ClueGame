@@ -25,7 +25,7 @@ public class Board extends JPanel implements MouseListener{
 	private List<String> weapons = new ArrayList<String>();
 	private HumanPlayer human;
 	private boolean humanturn;///is it the human's turn?
-	private List<Card> cards = new LinkedList<Card>();
+	private List<Card> cards = new ArrayList<Card>();
 	private Solution solution;
 	public static final int CELLSIZE=20;
 	private int numRows=15;
@@ -103,12 +103,11 @@ public class Board extends JPanel implements MouseListener{
 	public void deal() {
 		if (players.size() == 0) return;
 
-		List<Card> deck = new LinkedList<Card>(cards); // duplicate the cards list for dealing
-		Collections.shuffle(deck);
+		Collections.shuffle(cards);
 
 		int i = 0;
-		while (deck.size() > 0) {
-			Card card = deck.remove(0); // the deck is shuffled, so just remove the first card
+		while (cards.size() > 0) {
+			Card card = cards.remove(0); // the deck is shuffled, so just remove the first card
 			//String cardName = card.getName();
 			players.get(i).giveCard(card);
 			i = (i + 1) % players.size();
