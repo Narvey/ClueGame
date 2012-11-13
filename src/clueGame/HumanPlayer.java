@@ -6,4 +6,9 @@ public class HumanPlayer extends Player {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void takeTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -29,7 +29,7 @@ public class GameControlPanel extends JPanel {
 	private JButton nextPlayerButton, accusationButton;
 	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, responseTextBox;
 	private static List<Player> players;
-	private Player humanPlayer;
+	private HumanPlayer humanPlayer;
 	private static Player currentPlayer;
 
 	private boolean gameOver, submitAccusation;
@@ -144,7 +144,7 @@ public class GameControlPanel extends JPanel {
 				// if computer player then makeMove;
 				if(!currentPlayer.equals(humanPlayer)) {
 					makeMove();
-				}
+				}else gameBoard.highlight();
 
 				// redraw board, etc.
 				getParent().repaint();
@@ -200,7 +200,7 @@ public class GameControlPanel extends JPanel {
 					String name = rooms.get(key);
 					Card room = new Card(name, CardType.ROOM);
 					// Get suggestionCards
-					CardSet suggestionCards = ((ComputerPlayer) currentPlayer).createSuggestion(room, cards);
+					Solution suggestionCards = ((ComputerPlayer) currentPlayer).createSuggestion(room, cards);
 					Card person = suggestionCards.getPerson();
 					Card weapon = suggestionCards.getWeapon();
 
@@ -219,7 +219,7 @@ public class GameControlPanel extends JPanel {
 			}
 			else {
 				// Make Accusation.
-				CardSet accusationCards = ((ComputerPlayer) currentPlayer).getAccusationCardsCards();
+				Solution accusationCards = ((ComputerPlayer) currentPlayer).getAccusationCardsCards();
 				Card person = accusationCards.getPerson();
 				Card weapon = accusationCards.getWeapon();
 				Card room = accusationCards.getRoom();

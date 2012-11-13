@@ -10,10 +10,10 @@ import java.util.Set;
 import clueGame.Board;
 
 public class Player {
-	private String name;
-	private Color pieceColor;
-	private int cellIndex;
-	private Set<Card> cards = new HashSet<Card>();
+	protected String name;
+	protected Color pieceColor;
+	protected int cellIndex;
+	protected Set<Card> cards = new HashSet<Card>();
 
 	public Player() {
 		// TODO Auto-generated constructor stub
@@ -25,9 +25,9 @@ public class Player {
 	 * @param brd the board this person is playing on.
 	 */
 	public void draw(Graphics g, Board brd){
-		BoardCell start = brd.getCellAt(cellIndex);
+		BoardCell loc = brd.getCellAt(cellIndex);
 		g.setColor(pieceColor);
-		g.fillOval(start.getCol()*Board.CELLSIZE, start.getRow()*Board.CELLSIZE, Board.CELLSIZE, Board.CELLSIZE);
+		g.fillOval(loc.getCol()*Board.CELLSIZE, loc.getRow()*Board.CELLSIZE, Board.CELLSIZE, Board.CELLSIZE);
 	}
 
 	/**
