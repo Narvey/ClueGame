@@ -147,16 +147,19 @@ public class GameControlPanel extends JPanel {
 				currentPlayer = players.get(whichPlayer);
 				// Show current player
 				whoseTurnTextBox.setText(currentPlayer.getName());
-				// Get roll for current player
-				currentRoll = (new Random()).nextInt(6)+1;
-				// Show current roll.
-				dieTextBox.setText(Integer.toString(currentRoll));
+
 				// if computer player then makeMove;
 				if(gameBoard.isHumanTurn()){//human never finished their turn
 					JOptionPane.showMessageDialog(getParent(), "You must make a move");
 				}else if(!currentPlayer.equals(humanPlayer)) {
+					currentRoll = (new Random()).nextInt(6)+1;
+					// Show current roll.
+					dieTextBox.setText(Integer.toString(currentRoll));
 					makeMove();
 				}else {
+					currentRoll = (new Random()).nextInt(6)+1;
+					// Show current roll.
+					dieTextBox.setText(Integer.toString(currentRoll));
 					gameBoard.highlight();
 				}
 
