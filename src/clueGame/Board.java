@@ -71,6 +71,7 @@ public class Board extends JPanel implements MouseListener{
 		if(humanturn){
 			int row = e.getY()%CELLSIZE;
 			int col = e.getX()%CELLSIZE;
+			
 			//TODO actually do something.
 		}else JOptionPane.showMessageDialog(this, "Not your turn", "Problem", JOptionPane.WARNING_MESSAGE);
 	}
