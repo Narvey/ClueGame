@@ -35,7 +35,7 @@ public class ClueGame extends JFrame {
 		gameBoard = new Board();
 
 		try {
-			gameBoard.loadConfigFiles("CR-ClueLegend.txt", "CR-ClueLayout.csv", "weapons.txt", "players.txt");
+			gameBoard.loadConfigFiles("legend.txt", "board.csv", "weapons.txt", "players.txt");
 		} catch (BadConfigFormatException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		} catch (IOException e) {
