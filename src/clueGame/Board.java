@@ -374,10 +374,11 @@ public class Board extends JPanel implements MouseListener{
 		// populate legend map
 		while (scan.hasNext()) {
 			String wholeString = scan.nextLine();
-			if (!wholeString.contains(",")) {
-				throw new BadConfigFormatException("Comma missing in file " + legendFile);
-			}
 			String[] stringArr = wholeString.split(",");
+			if (!wholeString.contains(",")||stringArr.length!=4) {
+				throw new BadConfigFormatException("The format of file " + legendFile + " should be: \n" +
+						"N,Name,2,6");
+			}
 			String character = stringArr[0];
 			String room = stringArr[1].trim();
 			char c = character.charAt(0);			
