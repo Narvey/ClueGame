@@ -30,7 +30,7 @@ public class Board extends JPanel implements MouseListener{
 	private List<Card> cards = new ArrayList<Card>();
 	private List<Card> fulldeck;
 	private Solution solution;
-	public static final int CELLSIZE=30;
+	public static final int CELLSIZE=23;
 	public static final int ROUND=CELLSIZE/2;
 	private int numRows=15;
 	private int numColumns=15;//Default values avoid miniscule window.

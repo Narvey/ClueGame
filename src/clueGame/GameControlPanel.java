@@ -151,6 +151,7 @@ public class GameControlPanel extends JPanel {
 				// if computer player then makeMove;
 				if(gameBoard.isHumanTurn()){//human never finished their turn
 					JOptionPane.showMessageDialog(getParent(), "You must make a move");
+					gameBoard.highlight();
 				}else if(!currentPlayer.equals(humanPlayer)) {
 					currentRoll = (new Random()).nextInt(6)+1;
 					// Show current roll.
@@ -252,7 +253,7 @@ public class GameControlPanel extends JPanel {
 
 
 	public void newGamePrompt() {
-		int newGame = JOptionPane.showConfirmDialog(null, "Start a new game?");
+		int newGame = JOptionPane.showConfirmDialog(null, "Start a new game?", "Game Over", JOptionPane.YES_NO_OPTION);
 		if (newGame == JOptionPane.YES_OPTION) {
 			clueGame.setVisible(false);
 			clueGame = new ClueGame();

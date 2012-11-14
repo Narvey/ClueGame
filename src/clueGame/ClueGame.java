@@ -27,11 +27,10 @@ public class ClueGame extends JFrame {
 	private DetectiveNotesDialog detectiveNotes;
 	private GameControlPanel controlPanel;
 	private PlayerDisplay playerPanel;
-	private ClueGame clueGame;
+	private static ClueGame clueGame;
 
 	public ClueGame() {
 		super();
-		clueGame = this;
 		// Adding Board to JFrame
 		gameBoard = new Board();
 
@@ -142,10 +141,10 @@ public class ClueGame extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		ClueGame game = new ClueGame();
-		game.setTitle("The game of Clue-Lah!");
-		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.setVisible(true);
+		clueGame = new ClueGame();
+		clueGame.setTitle("The game of Clue-Lah!");
+		clueGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		clueGame.setVisible(true);
 	}
 
 }
