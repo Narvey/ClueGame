@@ -193,7 +193,7 @@ public class GameControlPanel extends JPanel {
 	private void makeMove() {
 
 		if(!((ComputerPlayer) currentPlayer).isFoundAccusation()) {
-			List<Card> cards = new LinkedList<Card>(gameBoard.getCards());
+			List<Card> cards = new LinkedList<Card>(gameBoard.getFulldeck());
 			// Pick a location from the calculated list.
 			BoardCell cell = ((ComputerPlayer) currentPlayer).pickLocation(gameBoard.getTargets(currentPlayer.getCellIndex(), currentRoll));
 			// moves to that location.

@@ -47,8 +47,6 @@ public class ClueGame extends JFrame {
 		// Pick solution cards and deal remaining cards to players.
 		gameBoard.setSolution(pickSolution());
 		gameBoard.deal();
-		
-
 
 		add(new JScrollPane(gameBoard));
 		//setLayout(new BorderLayout());

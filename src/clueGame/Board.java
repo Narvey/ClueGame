@@ -26,6 +26,7 @@ public class Board extends JPanel implements MouseListener{
 	private HumanPlayer human;
 	private boolean humanturn;///is it the human's turn?
 	private List<Card> cards = new ArrayList<Card>();
+	private List<Card> fulldeck = new ArrayList<Card>();
 	private Solution solution;
 	public static final int CELLSIZE=20;
 	private int numRows=15;
@@ -81,6 +82,10 @@ public class Board extends JPanel implements MouseListener{
 
 	public int calcIndex(int row, int col) {
 		return (row * numColumns) + col;
+	}
+	
+	public List<Card> getFulldeck() {
+		return fulldeck;
 	}
 
 	private void calcTargets(int calcIndex, int steps) {
@@ -330,6 +335,10 @@ public class Board extends JPanel implements MouseListener{
 		loadLegend(legendFile);
 		loadPlayers(playersFile);
 		loadWeapons(weaponsFile);
+		// Copy current deck of cards.
+		for(Card c : cards) {
+			fulldeck.add(c);
+		}
 	}
 
 	private void loadLegend(String legendFile) throws BadConfigFormatException, IOException {
