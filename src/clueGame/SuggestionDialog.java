@@ -32,7 +32,7 @@ public class SuggestionDialog extends JDialog {
 		this.controlPanel = controlPanel;
 		rooms = gameBoard.getRooms();
 		players = gameBoard.getPlayers();
-		currentPlayer = controlPanel.getCurrentPlayer();
+		currentPlayer = GameControlPanel.getCurrentPlayer();
 		personGuessCombo = new JComboBox();
 		roomGuessCombo = new JComboBox();
 		weaponGuessCombo = new JComboBox();
@@ -40,6 +40,7 @@ public class SuggestionDialog extends JDialog {
 		cancelButton = new JButton("Cancel");
 
 		setTitle("Make an Suggestion.");
+		setModal(true);
 		setLayout(new GridLayout(4, 0));
 		setSize(300, 200);
 		add(roomGuessPanel());
@@ -98,7 +99,7 @@ public class SuggestionDialog extends JDialog {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == submitButton) {				
+			if(e.getSource().equals(submitButton)) {				
 
 				// Get selected data.
 				personName = (String) personGuessCombo.getSelectedItem();
@@ -116,7 +117,9 @@ public class SuggestionDialog extends JDialog {
 
 				// Check if suggestion is correct.
 				Card disproveCard = gameBoard.disproveSuggestion(currentPlayer, person, weapon, room);
-				controlPanel.getGuessTextBox().setText(guessCards.toString());
+				if(controlPanel!=null)
+					controlPanel.setGuessText(guessCards.toString());
+				else JOptionPane.showMessageDialog(null, "MLMLMLM");
 				if(disproveCard != null) {
 					controlPanel.getResponseTextBox().setText(disproveCard.getName());
 				}
@@ -124,6 +127,8 @@ public class SuggestionDialog extends JDialog {
 					controlPanel.getResponseTextBox().setText("None");
 				}
 
+			}else if(e.getSource().equals(cancelButton)){
+				gameBoard.endHumanTurn();
 			}
 
 			setVisible(false);

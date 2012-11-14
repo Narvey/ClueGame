@@ -61,6 +61,7 @@ public class ClueGame extends JFrame {
 		getContentPane().add(pane, BorderLayout.CENTER);
 		getContentPane().add(controlPanel, BorderLayout.SOUTH);
 		getContentPane().add(playerPanel, BorderLayout.EAST);
+		gameBoard.setCtrlpanel(controlPanel);
 
 
 		// Adding the file menu to JFrame

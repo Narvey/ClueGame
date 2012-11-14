@@ -27,25 +27,24 @@ import org.junit.runner.Computer;
 import clueGame.Card.CardType;
 
 public class GameControlPanel extends JPanel {
-	private JButton nextPlayerButton, accusationButton;
-	private JTextField whoseTurnTextBox, dieTextBox, guessTextBox, responseTextBox;
+	private static JButton nextPlayerButton, accusationButton;
+	private static JTextField whoseTurnTextBox, dieTextBox, guessTextBox, responseTextBox;
 	private static List<Player> players;
-	private HumanPlayer humanPlayer;
+	private static HumanPlayer humanPlayer;
 	private static Player currentPlayer;
 
-	private boolean gameOver, submitAccusation;
-	private AccusationDialog accusationDialog;
-	private SuggestionDialog suggestionDialog;
-	private Board gameBoard;
-	private GameControlPanel controlPanel;
+	private static boolean gameOver, submitAccusation;
+	private static AccusationDialog accusationDialog;
+	private static Board gameBoard;
+	private static GameControlPanel controlPanel;
 	private static int whichPlayer;
 	private static int currentRoll;
-	private Map<Character, String> rooms;
-	private ClueGame clueGame;
+	private static Map<Character, String> rooms;
+	private static ClueGame clueGame;
 
-	public GameControlPanel(Board gameBoard, ClueGame clueGame) {
-		this.clueGame = clueGame;
-		this.gameBoard = gameBoard;
+	public GameControlPanel(Board gameBoardIn, ClueGame clueGameIn) {
+		clueGame = clueGameIn;
+		gameBoard = gameBoardIn;
 		gameOver = false;
 		submitAccusation = false;
 		whichPlayer = 0;
@@ -70,20 +69,25 @@ public class GameControlPanel extends JPanel {
 
 	}
 
-	public JTextField getGuessTextBox() {
-		return guessTextBox;
+	public void setGuessText(String txt) {
+		guessTextBox.setText(txt);
 	}
 
 	public JTextField getResponseTextBox() {
 		return responseTextBox;
 	}
-
-	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
+	public void nextPlayer(){
+		// Set index for next player.
+		whichPlayer = (whichPlayer+1)%players.size();
 	}
 
-	public void setSubmitAccusation(boolean submitAccusation) {
-		this.submitAccusation = submitAccusation;
+	public void setGameOver(boolean gameOvers) {
+		gameOver = gameOvers;
+	}
+
+	public void setSubmitAccusation(boolean submitAccusations) {
+		submitAccusation = submitAccusations;
+		if(submitAccusation)gameBoard.endHumanTurn();
 	}
 
 	private JPanel whoseTurnPanel() {
@@ -148,23 +152,14 @@ public class GameControlPanel extends JPanel {
 				// Show current roll.
 				dieTextBox.setText(Integer.toString(currentRoll));
 				// if computer player then makeMove;
-				if(!currentPlayer.equals(humanPlayer)) {
+				if(gameBoard.isHumanTurn()){//human never finished their turn
+					JOptionPane.showMessageDialog(getParent(), "You must make a move");
+				}else if(!currentPlayer.equals(humanPlayer)) {
 					makeMove();
-				}else gameBoard.highlight();
-
-				// redraw board, etc.
-				// getParent().repaint();
-				// check if human player in a room.
-				int currentPlayerLocation = currentPlayer.getCellIndex();
-				BoardCell currentPlayerCell = gameBoard.getCellAt(currentPlayerLocation);
-				if(currentPlayer.equals(humanPlayer) && currentPlayerCell.isRoom()) {
-					suggestionDialog = new SuggestionDialog(gameBoard, controlPanel);
-					suggestionDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-					suggestionDialog.setVisible(true);
+				}else {
+					gameBoard.highlight();
 				}
 
-				// Set index for next player.
-				whichPlayer = (whichPlayer+1)%players.size();
 			}
 			else if(e.getSource() == accusationButton && gameOver == false && submitAccusation == false) {
 
@@ -190,6 +185,9 @@ public class GameControlPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Have the computer player make a move
+	 */
 	private void makeMove() {
 
 		if(!((ComputerPlayer) currentPlayer).isFoundAccusation()) {
@@ -242,6 +240,7 @@ public class GameControlPanel extends JPanel {
 				((ComputerPlayer) currentPlayer).setFoundAccusation(false);
 			}
 		}
+		nextPlayer();
 	}
 
 

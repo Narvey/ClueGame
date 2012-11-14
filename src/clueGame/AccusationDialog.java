@@ -34,6 +34,7 @@ public class AccusationDialog extends JDialog {
 		cancelButton = new JButton("Cancel");
 
 		setTitle("Make an Accusation.");
+		setModal(true);
 		setLayout(new GridLayout(4, 0));
 		setSize(300, 200);
 		add(roomGuessPanel());

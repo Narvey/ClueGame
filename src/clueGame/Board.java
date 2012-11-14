@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
 import org.junit.runners.ParentRunner;
 import clueGame.Card.CardType;
 import clueGame.RoomCell.DoorDirection;
@@ -24,13 +26,15 @@ public class Board extends JPanel implements MouseListener{
 	private List<Player> players = new ArrayList<Player>(); // contains all players
 	private List<String> weapons = new ArrayList<String>();
 	private HumanPlayer human;
-	private boolean humanturn;///is it the human's turn?
+	private boolean humanturn=false;///is it the human's turn?
 	private List<Card> cards = new ArrayList<Card>();
-	private List<Card> fulldeck = new ArrayList<Card>();
+	private List<Card> fulldeck;
 	private Solution solution;
 	public static final int CELLSIZE=20;
 	private int numRows=15;
 	private int numColumns=15;//Default values avoid miniscule window.
+	private GameControlPanel ctrlpanel;
+	private SuggestionDialog suggestionDialog;
 
 	@Override
 	public void paintComponent(Graphics g){
@@ -46,6 +50,10 @@ public class Board extends JPanel implements MouseListener{
 		for(Player p : players){
 			p.draw(g, this);
 		}
+	}
+
+	public void setCtrlpanel(GameControlPanel ct){
+		ctrlpanel = ct;
 	}
 
 	/**
@@ -66,13 +74,32 @@ public class Board extends JPanel implements MouseListener{
 		humanturn=true;//if we are highlighting the options, it better be the human's turn.
 	}
 
+	public void endHumanTurn(){
+		humanturn=false;
+		repaint();
+	}
+
+	public boolean isHumanTurn(){
+		return humanturn;
+	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(humanturn){
-			int row = e.getY()%CELLSIZE;
-			int col = e.getX()%CELLSIZE;
-			
-			//TODO actually do something.
+			int row = e.getY()/CELLSIZE;
+			int col = e.getX()/CELLSIZE;
+			if(targets.contains(getCellAt(row,col))){
+				human.setCellIndex(calcIndex(row, col));
+				getParent().repaint();
+				BoardCell currentPlayerCell = cells.get(calcIndex(row, col));
+				if(currentPlayerCell.isRoom()) {
+					suggestionDialog = new SuggestionDialog(this, ctrlpanel);
+					suggestionDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+					suggestionDialog.setVisible(true);
+				}
+				//TODO actually do something.
+				humanturn=false;//Now your turn is done
+				ctrlpanel.nextPlayer();
+			}else JOptionPane.showMessageDialog(getParent(), "Not a valid move");
 		}else JOptionPane.showMessageDialog(this, "Not your turn", "Problem", JOptionPane.WARNING_MESSAGE);
 	}
 
@@ -84,7 +111,7 @@ public class Board extends JPanel implements MouseListener{
 	public int calcIndex(int row, int col) {
 		return (row * numColumns) + col;
 	}
-	
+
 	public List<Card> getFulldeck() {
 		return fulldeck;
 	}
@@ -337,9 +364,7 @@ public class Board extends JPanel implements MouseListener{
 		loadPlayers(playersFile);
 		loadWeapons(weaponsFile);
 		// Copy current deck of cards.
-		for(Card c : cards) {
-			fulldeck.add(c);
-		}
+		fulldeck = new ArrayList<Card>(cards);
 	}
 
 	private void loadLegend(String legendFile) throws BadConfigFormatException, IOException {
