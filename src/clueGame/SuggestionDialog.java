@@ -43,13 +43,14 @@ public class SuggestionDialog extends JDialog {
 		setModal(true);
 		setLayout(new GridLayout(4, 0));
 		setSize(300, 200);
+		setLocation(100,100);
 		add(roomGuessPanel());
 		add(personGuessPanel());
 		add(weaponGuessPanel());
 		add(buttonPanel());
 
 		submitButton.addActionListener(new ButtonsListener());
-		cancelButton.addActionListener(new ButtonsListener());
+		//cancelButton.addActionListener(new ButtonsListener());
 
 	}
 
@@ -91,7 +92,7 @@ public class SuggestionDialog extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0,2));
 		panel.add(submitButton);
-		panel.add(cancelButton);
+		//panel.add(cancelButton);
 		return panel;
 	}
 
@@ -127,9 +128,8 @@ public class SuggestionDialog extends JDialog {
 					controlPanel.getResponseTextBox().setText("None");
 				}
 
-			}else if(e.getSource().equals(cancelButton)){
-				gameBoard.endHumanTurn();
-			}
+			}gameBoard.endHumanTurn();
+			
 
 			setVisible(false);
 		}

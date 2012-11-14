@@ -31,6 +31,7 @@ public class Board extends JPanel implements MouseListener{
 	private List<Card> fulldeck;
 	private Solution solution;
 	public static final int CELLSIZE=20;
+	public static final int ROUND=CELLSIZE/2;
 	private int numRows=15;
 	private int numColumns=15;//Default values avoid miniscule window.
 	private GameControlPanel ctrlpanel;
@@ -69,7 +70,7 @@ public class Board extends JPanel implements MouseListener{
 		calcTargets(human.getCellIndex(), roll);
 		g.setColor(new Color(0xAA0055FF, true));
 		for(BoardCell c : targets){
-			g.fillRoundRect(c.getCol()*CELLSIZE, c.getRow()*CELLSIZE, CELLSIZE, CELLSIZE, 6, 6);
+			g.fillRoundRect(c.getCol()*CELLSIZE, c.getRow()*CELLSIZE, CELLSIZE, CELLSIZE, ROUND, ROUND);
 		}
 		humanturn=true;//if we are highlighting the options, it better be the human's turn.
 	}

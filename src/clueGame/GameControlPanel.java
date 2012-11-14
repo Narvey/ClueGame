@@ -162,6 +162,7 @@ public class GameControlPanel extends JPanel {
 
 			}
 			else if(e.getSource() == accusationButton && gameOver == false && submitAccusation == false) {
+				if(gameBoard.isHumanTurn()){
 
 				if (accusationDialog == null) {
 					accusationDialog = new AccusationDialog(gameBoard, controlPanel);
@@ -175,9 +176,11 @@ public class GameControlPanel extends JPanel {
 				else {
 					accusationDialog.setVisible(true);
 				}
+				}else //It is not the human's turn
+					JOptionPane.showMessageDialog(getParent(), "You can't make an accusation when not your turn.");
 			}
 			else if(e.getSource() == accusationButton && gameOver == false && submitAccusation == true) {
-				JOptionPane.showMessageDialog(null, "It's not your turn.");
+				JOptionPane.showMessageDialog(null, "It's not your turn to move.");
 			}
 			else {
 				newGamePrompt();

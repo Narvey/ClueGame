@@ -104,7 +104,7 @@ public class ClueGame extends JFrame {
 			}
 		}
 		//////////// Print out the solution cards. (DEBUG)
-		System.out.println("Solution: " + person.getName() + ", " + room.getName() + ", " + weapon.getName());
+		//System.out.println("Solution: " + person.getName() + ", " + room.getName() + ", " + weapon.getName());
 		return new Solution(person, weapon, room);
 	}
 

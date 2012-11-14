@@ -107,7 +107,7 @@ public class DetectiveNotesDialog extends JDialog {
 	private JPanel weaponGuessPanel () {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		panel.setBorder(new TitledBorder("Weapons"));
+		panel.setBorder(new TitledBorder("Weapon Guess"));
 		weaponGuessCombo.addItem("Haven't Decided");
 		for(String str : gameBoard.getWeapons()) {
 			weaponGuessCombo.addItem(str);

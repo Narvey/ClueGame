@@ -114,6 +114,7 @@ public class AccusationDialog extends JDialog {
 				else {
 					JOptionPane.showMessageDialog(null, "Sorry, not correct.");
 				}
+				controlPanel.nextPlayer();
 				
 			}
 			else {
